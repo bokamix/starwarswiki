@@ -1,29 +1,41 @@
-import React, { Component } from 'react';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
-import Courses from './Courses';
-import './App.css';
+import React, { Component } from "react";
+import List from "./List";
+import axios from "axios";
 
+class App extends Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      planets: [],
+      films: []
+    };
 
-const client = new ApolloClient({
-  uri: 'https://mighty-chamber-74291.herokuapp.com/https://graphql.org/swapi-graphql',
-});
+    this.getFilms = this.getFilms.bind(this);
+  }
 
+  getFilms() {
+    return axios
+      .get(
+        "https://mighty-chamber-74291.herokuapp.com/https://swapi.co/api/films"
+      )
+      .then(response => {
+        this.setState({ films: response.data.results });
+      });
+  }
 
+  componentDidMount() {
+    this.getFilms();
+  }
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <div className="container">
-      <nav className="navbar navbar-dark bg-primary">
-        <a className="navbar-brand" href="#">React and GraphQL - Sample Application</a>
-      </nav>
-      <div>
-        <Courses />
+  render() {
+    const { films } = this.state;
+    return (
+      <div className="App">
+        <List films={films} />
       </div>
-    </div>
-  </ApolloProvider>
-)
-
+    );
+  }
+}
 
 export default App;
