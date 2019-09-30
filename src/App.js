@@ -5,8 +5,9 @@ import Courses from './Courses';
 import './App.css';
 
 
+
 const client = new ApolloClient({
-  uri: 'https://graphql.org/swapi-graphql',
+  uri: 'https://mighty-chamber-74291.herokuapp.com/https://graphql.org/swapi-graphql',
 });
 
 
