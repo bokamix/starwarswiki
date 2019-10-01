@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import List from "./List";
 import axios from "axios";
-import AddListForm from '../src/AddListForm';
+
 
 class App extends Component {
   constructor(props) {
@@ -9,8 +9,9 @@ class App extends Component {
 
     this.state = {
         films: [],
-        value: '',
-        planet: [`https://swapi.co/api/planets/1`],
+        value: ``,
+        search: ``,
+        planet: [],
      
     };
 
@@ -31,16 +32,7 @@ class App extends Component {
   
   
 
-  getSearch() {
-    return axios
-      .get(
-        "https://mighty-chamber-74291.herokuapp.com/https://swapi.co/api/people/?search=r2"
-      )
-      .then(response => {
-        console.log(response.data.results)
-        
-      });
-  } 
+
   componentDidMount() {
     this.getFilms();
   }
@@ -48,15 +40,26 @@ class App extends Component {
     this.setState({ value: event.target.value });
   };
   onHandleChange = event => {
-    this.setState({ ...this.state.planet, planet: event.target.value });
+    this.setState({ value: event.target.value, search: `https://swapi.co/api/planets/?search=${this.state.value}` });
+  
+    return axios
+    .get(`${this.state.search}`).then(response => {
+      console.log(response.data.results)   
+      if(response.data.results === undefined){
+      console.log("kdas")}
+      else{
+      this.setState({planet: response.data.results}) }
+      
+    });
+    
   };
   onAddItem = () => {
     this.setState(state => {
-      const films = [...state.films, {title: state.value, planets: [state.planet]}];
+      const films = [...state.films, {title: state.value}];
       return {
         films,
         value: '',
-        planet: ''
+       
       };
     });
   
@@ -66,21 +69,19 @@ class App extends Component {
     return (
       <div className="App">
         <List films={films} />
-       {console.log(this.state.films)}
+    
         <div>
-        
+        {this.state.planet.map((name, num) => {
+              return (
+                <p key={num}>{name.name}</p>
+              );
+            })}
         <input
           type="text"
           value={this.state.value}
-          onChange={this.onChangeValue}
+          onChange={this.onHandleChange}
         />
-     <select
-       value={this.state.planet} 
-       onChange={this.onHandleChange}>
-        <option value={`https://swapi.co/api/planets/1`}>Brak planet</option>
-        <option value={`https://swapi.co/api/planets/2`}>sdsd</option>
-        <option value={`https://swapi.co/api/planets/3`}>sdwqsd</option>
-    </select>
+   
         <button
           type="button"
           onClick={this.onAddItem}
@@ -89,7 +90,7 @@ class App extends Component {
           Add
         </button>
       </div>
-        <AddListForm />
+    
       </div>
     );
   }
