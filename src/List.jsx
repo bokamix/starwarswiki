@@ -7,9 +7,9 @@ class List extends Component {
 
     return (
       <div className="">
-        {films.map(p => {
+        {films.map((p, num )=> {
           return (
-            <div key={p.url}>
+            <div key={num}>
               <h1 className="char-name">{p.title}</h1>
 
               <PlanetInfo planetInfo={p} />
