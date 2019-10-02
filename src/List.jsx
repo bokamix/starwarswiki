@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import PlanetInfo from "./PlanetInfo";
-
+import styled from 'styled-components';
 class List extends Component {
   render() {
     const films = this.props.films;
-
+    const FilmPlanetList = styled.div`
+    
+    margin:30px;
+  `;
     return (
-      <div className="">
+      <FilmPlanetList>
         {films.map((p, num )=> {
           return (
             <div key={num}>
-              <h1 className="char-name">{p.title}</h1>
-
+             
               <PlanetInfo planetInfo={p} />
             </div>
           );
         })}
-      </div>
+      </FilmPlanetList>
     );
   }
 }

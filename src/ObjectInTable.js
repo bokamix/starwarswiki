@@ -10,13 +10,15 @@ class ObjectInList extends Component {
       planets: [],
       linkP: `https://mighty-chamber-74291.herokuapp.com/${this.props.PlanetNumber}`
     };
-    this.getPlanets = this.getPlanets.bind(this);
+  
   }
 
-  getPlanets() {
+  getPlanets= () => {
+    this.setState({ loading: true }, () => {
     swapi.get(`${this.state.linkP}`).then(result => {
-      this.setState({ planets: result });
+      this.setState({ planets: result, loading: false});
     });
+  });
   }
 
   componentDidMount() {
@@ -24,8 +26,10 @@ class ObjectInList extends Component {
   }
 
   render() {
+    const { loading } = this.state;
     return (
-      <tr>
+      <>
+      <tr red={loading ? `false` : `true`}>
         <th>{this.state.planets.name}</th>
         <th>{this.state.planets.rotation_period}</th>
         <th>{this.state.planets.orbital_period}</th>
@@ -34,6 +38,7 @@ class ObjectInList extends Component {
         <th>{this.state.planets.surface_water}</th>
         <th>{this.state.planets.population}</th>
       </tr>
+      </>
     );
   }
 }

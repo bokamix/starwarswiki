@@ -1,58 +1,59 @@
 import React, { Component } from "react";
-
+import { usePromiseTracker } from "react-promise-tracker";
 import axios from "axios";
 import ObjectInList from "./ObjectInTable";
-
+import styled from 'styled-components';
 class PlanetInfo extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       expanded: false,
-      planets: []
+      planets: [],
+      toggle:false 
     };
-    this.getPlanets = this.getPlanets.bind(this);
-    this.open = this.open.bind(this);
-    this.close = this.close.bind(this);
+
+  
   }
 
-  getPlanets() {
-    return axios
-      .get(
-        `https://mighty-chamber-74291.herokuapp.com/https://swapi.co/api/planets`
-      )
-      .then(response => {
-        this.setState({ planets: response.data.results });
-      });
+  onToggle = () => {
+
+    this.setState({ toggle: !this.state.toggle  });
+
   }
+
+
+ 
+  
 
   componentDidMount() {
-    this.getPlanets();
+  
   }
-  open() {
-    this.setState({ expanded: !this.state.expanded });
-  }
-
-  close() {
-    this.setState({ expanded: !this.state.expanded });
-  }
-
+ 
   render() {
-    const info = this.props.planetInfo;
+    const FilmTitle = styled.div`
+    background:white;
+    margin:30px;
+    
+  `;
+   const TitleWrapper = styled.div`
+   background:white;
+  
+   width:100%;
+ `;
 
-    if (!this.state.expanded) {
-      return (
-        <p className="btn btn-info" onClick={this.open}>
-          Show info
-        </p>
-      );
-    }
+    const TableGenerator =  this.props.planetInfo.planets.map((p, num) => 
+    <ObjectInList key={num} open={this.state.expanded} PlanetNumber={p}  />
+    );
+       
+  
 
     return (
-      <div className="user-details">
-        <p className="btn btn-danger" onClick={this.close}>
-          Hide info
-        </p>
+      <FilmTitle>
+         <TitleWrapper onClick={this.onToggle}>
+              <h1  className="film-name">{this.props.planetInfo.title}</h1 >
+          </TitleWrapper>
+        {this.state.toggle && 
         <table>
           <thead>
             <tr>
@@ -66,18 +67,10 @@ class PlanetInfo extends Component {
             </tr>
           </thead>
           <tbody>
-            {info.planets.map((p, num) => {
-              return (
-                <ObjectInList
-                  key={num}
-                  open={this.state.expanded}
-                  PlanetNumber={p}
-                />
-              );
-            })}
+         { TableGenerator}
           </tbody>
-        </table>
-      </div>
+        </table>}
+      </FilmTitle>
     );
   }
 }

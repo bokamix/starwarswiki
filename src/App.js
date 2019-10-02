@@ -1,24 +1,21 @@
 import React, { Component } from "react";
 import List from "./List";
 import axios from "axios";
+import styled from 'styled-components';
 
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       films: [],
       value: ``,
       search: "",
       searchResult: [],
       planet: [],
-      nameValue: "",
+      valueName: "",
       planetToAdd: [],
       planetToAddUrl:[]
-    };
-    this.getFilms = this.getFilms.bind(this);
-    this.onAddItem = this.onAddItem.bind(this);
-    this.onAddPlanet = this.onAddPlanet.bind(this);
+    };  
   }
 
   getFilms() {
@@ -34,10 +31,10 @@ class App extends Component {
   componentDidMount() {
     this.getFilms();
   }
-  onChangeValue = event => {
+  onChangeValue = (event) => {
     this.setState({ valueName: event.target.value });
   };
-  onHandleChange = event => {
+  onHandleChange = (event) => {
     this.setState({
       value: event.target.value,
       search: `https://mighty-chamber-74291.herokuapp.com/https://swapi.co/api/planets/?search=${this.state.value}`
@@ -74,14 +71,12 @@ class App extends Component {
       };
     });
   };
-  onAddPlanet = event => {
+  onAddPlanet = (event) => {
     let number = [...event.target.parentNode.children].indexOf(event.target);
-
     this.state.planetToAdd.push(`${this.state.searchResult[number].name}`);
     this.state.planetToAddUrl.push(`${this.state.searchResult[number].url}`)
     this.setState({ searchResult: [], value: "" });
-    console.log(this.state.planetToAdd);
-    console.log(this.state.planetToAddUrl);
+   
     //must add verification to double value
   };
 
@@ -89,8 +84,7 @@ class App extends Component {
     const { films } = this.state;
     return (
       <div className="App">
-        <List films={films} />
-        {console.log(this.state.films)}
+        <List films={films} />       
         <div>
           <label>Movie Title</label>
           <input
@@ -118,6 +112,7 @@ class App extends Component {
               );
             })}
           </div>
+
           <button
             type="button"
             onClick={this.onAddItem}
