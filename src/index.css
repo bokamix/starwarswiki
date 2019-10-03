@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Barlow&display=swap');
+*{box-sizing: border-box;}
 body {
-  margin: 40;
-  padding: 0;
+   padding: 0;
   font-family: sans-serif;
-  color: #555555; 
-  background: #ffffff; 
+  
+  
 }
 
 .jumbotron{
@@ -19,11 +20,11 @@ body {
 ul{
   list-style: none;
 }
-.film-name{
-  color: #1BA1BE;
-}
+
 .App{
   background-color: #e0e6ee;
   margin:0 auto;
   width: 790px;
+  border-radius: 8px; 
+
 }

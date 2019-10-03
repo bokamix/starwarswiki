@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 const swapi = require("swapi-node");
 
 class ObjectInList extends Component {
@@ -30,13 +29,13 @@ class ObjectInList extends Component {
     return (
       <>
       <tr red={loading ? `false` : `true`}>
-        <th>{this.state.planets.name}</th>
-        <th>{this.state.planets.rotation_period}</th>
-        <th>{this.state.planets.orbital_period}</th>
-        <th>{this.state.planets.diameter}</th>
-        <th>{this.state.planets.climate}</th>
-        <th>{this.state.planets.surface_water}</th>
-        <th>{this.state.planets.population}</th>
+        <th><p>{this.state.planets.name}</p></th>
+        <th><p>{this.state.planets.rotation_period}</p></th>
+        <th><p>{this.state.planets.orbital_period}</p></th>
+        <th><p>{this.state.planets.diameter}</p></th>
+        <th><p>{this.state.planets.climate}</p></th>
+        <th><p>{this.state.planets.surface_water}</p></th>
+        <th><p>{this.state.planets.population}</p></th>
       </tr>
       </>
     );
