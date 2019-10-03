@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import List from "./List";
 import axios from "axios";
-import styled from 'styled-components';
+import styled from "styled-components";
+import DeleteButton from "./assets/DELETE.svg";
 
 class App extends Component {
   constructor(props) {
@@ -14,10 +15,10 @@ class App extends Component {
       planet: [],
       valueName: "",
       planetToAdd: [],
-      planetToAddUrl:[]
-    };  
+      planetToAddUrl: []
+    };
   }
-
+  ///Get Planet from SWAPI
   getFilms() {
     return axios
       .get(
@@ -27,20 +28,22 @@ class App extends Component {
         this.setState({ films: response.data.results });
       });
   }
-
+  ///Get Planet from SWAPI when component is load
   componentDidMount() {
     this.getFilms();
   }
-  onChangeValue = (event) => {
+  onChangeValue = event => {
     this.setState({ valueName: event.target.value });
   };
-  onHandleChange = (event) => {
+
+  ///Search Event
+  onHandleSearch = event => {
     this.setState({
       value: event.target.value,
       search: `https://mighty-chamber-74291.herokuapp.com/https://swapi.co/api/planets/?search=${this.state.value}`
     });
-    ///Muszę dodać opóźnienie w zapytaniach, żeby nie spamować zapytaniami przy każdej literacji tylko
-    // musi się zapytywać gdy przestanę pisać na 1 sec
+    ///We will use Lodash to minimalize number of GET method
+
     return axios.get(`${this.state.search}`).then(response => {
       if (response.data.results === undefined) {
         console.log("kdas");
@@ -49,7 +52,7 @@ class App extends Component {
       }
     });
   };
-
+  //event who add film to films list
   onAddItem = () => {
     this.setState(state => {
       this.state.searchResult.map((name, num) => {
@@ -66,40 +69,56 @@ class App extends Component {
         valueName: "",
         planets: "",
         planet: [],
-        planetToAdd:[],
-        planetToAddUrl:[]
+        planetToAdd: [],
+        planetToAddUrl: []
       };
     });
   };
-  onAddPlanet = (event) => {
+  //Event who add planet to custom film lists planet
+  onAddPlanet = event => {
     let number = [...event.target.parentNode.children].indexOf(event.target);
     this.state.planetToAdd.push(`${this.state.searchResult[number].name}`);
-    this.state.planetToAddUrl.push(`${this.state.searchResult[number].url}`)
-    this.setState({ searchResult: [], value: "" });
-   
+    this.state.planetToAddUrl.push(`${this.state.searchResult[number].url}`);
+    this.setState({ searchResult: [], value: "" }); //reset value
+
     //must add verification to double value
+  };
+  onDeletePlanet = num => {
+    this.state.planetToAdd.splice(num, 1);
+    this.state.planetToAddUrl.splice(num, 1);
+    this.setState({ ...this.state.planetToAdd, ...this.state.planetToAddUrl }); //reset value
   };
 
   render() {
     const { films } = this.state;
     return (
       <div className="App">
-        <List films={films} />       
+        <List films={films} />
         <div>
+          {/* Film to ADD*/}
           <label>Movie Title</label>
           <input
             type="text"
             value={this.state.valueName}
             onChange={this.onChangeValue}
           />
+
+          {/* Planet to ADD */}
           {this.state.planetToAdd.map((name, num) => {
-            return <p key={num}>{name}</p>;
+            return (
+              <div key={num}>
+                <p>{name}</p>
+                <div onClick={() => this.onDeletePlanet(num)}>
+                  <img src={DeleteButton} />
+                </div>
+              </div>
+            );
           })}
           <label>Add Planet</label>
           <input
             type="text"
             value={this.state.value}
-            onChange={this.onHandleChange}
+            onChange={this.onHandleSearch}
           />
 
           <div>
@@ -112,7 +131,6 @@ class App extends Component {
               );
             })}
           </div>
-
           <button
             type="button"
             onClick={this.onAddItem}

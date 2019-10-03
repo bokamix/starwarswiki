@@ -3,6 +3,8 @@ import { usePromiseTracker } from "react-promise-tracker";
 import axios from "axios";
 import ObjectInList from "./ObjectInTable";
 import styled from 'styled-components';
+import ArrowClose from './assets/ARROWCLOSE.svg'
+import ArrowOpen from './assets/ARROWOPEN.svg'
 class PlanetInfo extends Component {
   constructor(props) {
     super(props);
@@ -46,12 +48,13 @@ class PlanetInfo extends Component {
     <ObjectInList key={num} open={this.state.expanded} PlanetNumber={p}  />
     );
        
-  
+
 
     return (
       <FilmTitle>
          <TitleWrapper onClick={this.onToggle}>
-              <h1  className="film-name">{this.props.planetInfo.title}</h1 >
+              <h1  className="film-name">{this.props.planetInfo.title}</h1 > 
+              <img src={this.state.toggle ? ArrowClose : ArrowOpen } />
           </TitleWrapper>
         {this.state.toggle && 
         <table>
