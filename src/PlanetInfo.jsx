@@ -50,7 +50,7 @@ class PlanetInfo extends Component {
       margin: 16px 30px;
       background: white;
     `;
-    const CloseOpenImageWrapper = styled.div``;
+    
     const AboutPlanetTable = styled.table`
       width:100%;
      p{
@@ -78,9 +78,9 @@ class PlanetInfo extends Component {
           <div>
             <h1>{this.props.planetInfo.title}</h1>
           </div>
-          <CloseOpenImageWrapper>
+          <div>
             <img src={this.state.toggle ? ArrowClose : ArrowOpen} />
-          </CloseOpenImageWrapper>
+          </div>
         </FilmTitle>
         {this.state.toggle && (
           <AboutPlanetTable>

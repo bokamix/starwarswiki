@@ -4,6 +4,8 @@ import axios from "axios";
 import styled from "styled-components";
 import DeleteButton from "./assets/DELETE.svg";
 import StarLogo from "./assets/LOGO.svg";
+import ArrowClose from "./assets/ARROWCLOSE.svg";
+import ArrowOpen from "./assets/ARROWOPEN.svg";
 
 ///style///
 
@@ -44,7 +46,10 @@ const ButtonLabel = styled.label`
 `;
 
 const OneInputWrapper = styled.div`
-    margin-bottom:17px;
+    :first-child{
+      margin-bottom:17px;
+    }
+   
 `;
   
 const StyledInput = styled.input`
@@ -88,8 +93,6 @@ const AddFilmButton = styled.div`
         margin:31px 0;
         text-decoration: none;
         border:none;
-        
-       
         p{
           margin-block-start: 0em;
           margin-block-end: 0em;
@@ -109,19 +112,77 @@ const ListOfSearchResult = styled.div`
   position:absolute;
   width: 540px;  
   background: #FFFFFF;
-  p{
+  box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.5);
+    p{
     margin-block-start: 0em;
     margin-block-end: 0em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    margin-top:13px;
-    margin-bottom:13px;
-    margin-left:11px; 
-    
+    padding-top:13px;
+    padding-bottom:13px;
+    padding-left:11px; 
+    border-left: 1px solid #E5E5E5; 
+    border-right: 1px solid #E5E5E5; 
   }
-  
+  p:first-child{
+    border-top: 1px solid #E5E5E5; 
+  }
+  p:last-child {
+    border-bottom: 1px solid #E5E5E5; 
+  }
   }
 `;
+const PlanetToAddWrapper = styled.div`
+    display:flex;
+    flex-wrap:wrap;
+    div{
+      display:flex;
+      align-items:baseline;
+      flex-direction: row;
+      border: 1px solid #999999;
+      box-sizing: border-box;
+      justify-content:center;
+      border-radius: 18px;
+      padding:3px 16px;    
+      margin:10px;
+      margin-left:0;  
+      p{
+        display: block;
+        margin-block-start: 0em;
+        margin-block-end: 0em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        margin-right:13px;
+        margin-top:6px;
+        margin-bottom:6px;
+      }
+    }
+`;
+
+const AddFilmColapse = styled.div`
+      background: white;
+      display: flex;
+      flex-wrap: nowrap;
+      width: 100%;
+      height:48px;
+      align-items: baseline;
+      justify-content: space-between;
+      border-radius: 4px;
+      box-shadow: 0px 2px 1px rgba(196, 196, 196, 0.2);
+      h1 {
+        color: #00687F;
+        font-family: 'Barlow', sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 19px;
+        
+      }
+      div {
+        padding: 0 15px;
+      }
+    `;
+
 
 //style end//
 
@@ -136,7 +197,8 @@ class App extends Component {
       planet: [],
       valueName: "",
       planetToAdd: [],
-      planetToAddUrl: []
+      planetToAddUrl: [],
+      toggle: false,
     };
   }
   ///Get Planet from SWAPI
@@ -209,6 +271,9 @@ class App extends Component {
     this.state.planetToAddUrl.splice(num, 1);
     this.setState({ ...this.state.planetToAdd, ...this.state.planetToAddUrl }); //reset value
   };
+  onToggle = () => {
+    this.setState({ toggle: !this.state.toggle });
+  };
 
   render() {
     const { films } = this.state;
@@ -220,12 +285,22 @@ class App extends Component {
             <LogoImg src={StarLogo} />
           </LogoWrapper>
           <List films={films} />
-
+          
+          
+    
           <AddFilmWrapper>
-            <InputsWrapper>
+          <AddFilmColapse onClick={this.onToggle}>
+          <div>
+            <h1>Add Planet</h1>
+          </div>
+          <div>
+            <img src={this.state.toggle ? ArrowClose : ArrowOpen} />
+          </div>
+        </AddFilmColapse>
+        {this.state.toggle && (<InputsWrapper>
               {/* Film to ADD*/}
-              <ButtonLabel>Movie Title</ButtonLabel>
               <OneInputWrapper>
+              <ButtonLabel>Movie Title</ButtonLabel>              
                 <StyledInput
                   type="text"
                   value={this.state.valueName}
@@ -233,25 +308,26 @@ class App extends Component {
                   placeholder="Please enter the tittle of the movie"
                 />
               </OneInputWrapper>
-              {/* Planet to ADD */}
-              {this.state.planetToAdd.map((name, num) => {
-                return (
-                  <div key={num}>
-                    <p>{name}</p>
-                    <div onClick={() => this.onDeletePlanet(num)}>
-                      <img src={DeleteButton} />
-                    </div>
-                  </div>
-                );
-              })}
-              <ButtonLabel>Add Planet</ButtonLabel>
+                 <PlanetToAddWrapper>
+                  {this.state.planetToAdd.map((name, num) => {
+                    return (
+                      <div key={num}>
+                        <p>{name}</p>
+                        <span onClick={() => this.onDeletePlanet(num)}>
+                          <img src={DeleteButton} />
+                        </span>
+                      </div>
+                    );
+                  })}
+               </PlanetToAddWrapper>   
               <OneInputWrapper>
-                <StyledInput
-                  type="text"
-                  value={this.state.value}
-                  onChange={this.onHandleSearch}
-                  placeholder="Seacrh for the the planet in database"
-                />
+                <ButtonLabel>Add Planet</ButtonLabel>
+                  <StyledInput
+                    type="text"
+                    value={this.state.value}
+                    onChange={this.onHandleSearch}
+                    placeholder="Seacrh for the the planet in database"
+                  />
               </OneInputWrapper>
               <ListOfSearchResult>               
                 {this.state.searchResult.map((name, num) => {
@@ -271,7 +347,7 @@ class App extends Component {
                   <p>ADD MOVIE</p>
                 </button>
               </AddFilmButton>
-            </InputsWrapper>
+            </InputsWrapper>)}
           </AddFilmWrapper>
           <COPYRIGHTWrapper>
             <p>COPYRIGHT © 2019 MIRUMEE SOFTWARE</p>
