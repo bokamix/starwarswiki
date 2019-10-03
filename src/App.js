@@ -7,6 +7,7 @@ import StarLogo from "./assets/LOGO.svg";
 import ArrowClose from "./assets/ARROWCLOSE.svg";
 import ArrowOpen from "./assets/ARROWOPEN.svg";
 import SearchIcon from './assets/SEARCH.svg';
+import LoaderArrows from './assets/LoaderArrows.svg';
 
 ///style///
 
@@ -14,7 +15,18 @@ const AppWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   min-width: 736px;
+  position:relative;
+
 `;
+const LoaderArrowsWrapper = styled.img`
+      transform: rotate(360deg);
+       transform-origin: top left;
+      position:absolute;
+      top:288px;
+      left:371px;   
+  `;
+
+
 const LogoWrapper = styled.div`
   text-align: center;
   margin: 0 auto;
@@ -205,21 +217,26 @@ class App extends Component {
       planetToAdd: [],
       planetToAddUrl: [],
       toggle: false,
+      loadingFilms: true,
     };
   }
   ///Get Planet from SWAPI
   getFilms() {
+    this.setState({loadingFilms: false})
     return axios
       .get(
         "https://mighty-chamber-74291.herokuapp.com/https://swapi.co/api/films"
       )
       .then(response => {
-        this.setState({ films: response.data.results });
+        this.setState({ films: response.data.results, loadingFilms:true });
+        ///We will use Lodash to minimalize number of GET method
+      ///Must add error message
       });
+     
   }
   ///Get Planet from SWAPI when component is load
-  componentDidMount() {
-    this.getFilms();
+  componentDidMount() {    
+    this.getFilms();    
   }
   onChangeValue = event => {
     this.setState({ valueName: event.target.value });
@@ -230,12 +247,11 @@ class App extends Component {
     this.setState({
       value: event.target.value,
       search: `https://mighty-chamber-74291.herokuapp.com/https://swapi.co/api/planets/?search=${this.state.value}`
-    });
-    ///We will use Lodash to minimalize number of GET method
-
+    });    
     return axios.get(`${this.state.search}`).then(response => {
-      if (response.data.results === undefined) {
-        console.log("kdas");
+      if (response.data.results === undefined) {        
+        ///We will use Lodash to minimalize number of GET method
+///Must add error message
       } else {
         this.setState({ searchResult: response.data.results });
       }
@@ -283,14 +299,15 @@ class App extends Component {
 
   render() {
     const { films } = this.state;
-
+    
     return (
-      <div className="App">
+      <div className="App">        
         <AppWrapper>
           <LogoWrapper>
             <a href=""><LogoImg src={StarLogo} /></a>
           </LogoWrapper>
-          <List films={films} /> 
+          {!this.state.loadingFilms && <LoaderArrowsWrapper src={LoaderArrows}/> }
+          <List films={films} />          
           <AddFilmWrapper>
           <AddFilmColapse onClick={this.onToggle}>
           <div>

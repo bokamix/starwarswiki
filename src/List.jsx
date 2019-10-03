@@ -14,7 +14,7 @@ class List extends Component {
         {films.map((p, num )=> {
           return (
             <div key={num}>             
-              <PlanetInfo planetInfo={p} />
+              <PlanetInfo filmInfo={p} />              
             </div>
           );
         })}
