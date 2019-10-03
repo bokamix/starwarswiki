@@ -6,6 +6,7 @@ import DeleteButton from "./assets/DELETE.svg";
 import StarLogo from "./assets/LOGO.svg";
 import ArrowClose from "./assets/ARROWCLOSE.svg";
 import ArrowOpen from "./assets/ARROWOPEN.svg";
+import SearchIcon from './assets/SEARCH.svg';
 
 ///style///
 
@@ -46,10 +47,15 @@ const ButtonLabel = styled.label`
 `;
 
 const OneInputWrapper = styled.div`
+    position:relative;
     :first-child{
       margin-bottom:17px;
     }
-   
+   img{
+     position:absolute;
+     bottom:7px;
+     right:0;
+   }
 `;
   
 const StyledInput = styled.input`
@@ -106,7 +112,7 @@ const AddFilmButton = styled.div`
           color: #FFFFFF;
           letter-spacing: 0.05em;   
           
-  }}}
+  }}
 `;
 const ListOfSearchResult = styled.div`
   position:absolute;
@@ -130,7 +136,7 @@ const ListOfSearchResult = styled.div`
   p:last-child {
     border-bottom: 1px solid #E5E5E5; 
   }
-  }
+  
 `;
 const PlanetToAddWrapper = styled.div`
     display:flex;
@@ -282,12 +288,9 @@ class App extends Component {
       <div className="App">
         <AppWrapper>
           <LogoWrapper>
-            <LogoImg src={StarLogo} />
+            <a href=""><LogoImg src={StarLogo} /></a>
           </LogoWrapper>
-          <List films={films} />
-          
-          
-    
+          <List films={films} /> 
           <AddFilmWrapper>
           <AddFilmColapse onClick={this.onToggle}>
           <div>
@@ -321,6 +324,7 @@ class App extends Component {
                   })}
                </PlanetToAddWrapper>   
               <OneInputWrapper>
+                <img src={SearchIcon}/>
                 <ButtonLabel>Add Planet</ButtonLabel>
                   <StyledInput
                     type="text"

@@ -29,13 +29,13 @@ class ObjectInList extends Component {
     return (
       <>
       <tr red={loading ? `false` : `true`}>
-        <th><p>{this.state.planets.name}</p></th>
-        <th><p>{this.state.planets.rotation_period}</p></th>
-        <th><p>{this.state.planets.orbital_period}</p></th>
-        <th><p>{this.state.planets.diameter}</p></th>
-        <th><p>{this.state.planets.climate}</p></th>
-        <th><p>{this.state.planets.surface_water}</p></th>
-        <th><p>{this.state.planets.population}</p></th>
+        <td><p>{this.state.planets.name}</p></td>
+        <td><p>{this.state.planets.rotation_period}</p></td>
+        <td><p>{this.state.planets.orbital_period}</p></td>
+        <td><p>{this.state.planets.diameter}</p></td>
+        <td><p>{this.state.planets.climate}</p></td>
+        <td><p>{this.state.planets.surface_water}</p></td>
+        <td><p>{this.state.planets.population}</p></td>
       </tr>
       </>
     );

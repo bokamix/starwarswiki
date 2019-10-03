@@ -3,24 +3,12 @@ import ObjectInList from "./ObjectInTable";
 import styled from "styled-components";
 import ArrowClose from "./assets/ARROWCLOSE.svg";
 import ArrowOpen from "./assets/ARROWOPEN.svg";
-class PlanetInfo extends Component {
-  constructor(props) {
-    super(props);
+import blackDownArrow from './assets/blackDownArrow.svg'
+import blackUpArrow from './assets/blackUpArrow.svg'
 
-    this.state = {
-      planets: [],
-      toggle: false
-    };
-  }
+  /////Styles ////
 
-  onToggle = () => {
-    this.setState({ toggle: !this.state.toggle });
-  };
-
-  componentDidMount() {}
-
-  render() {
-    const FilmTitle = styled.div`
+const FilmTitle = styled.div`
       background: white;
       display: flex;
       flex-wrap: nowrap;
@@ -54,7 +42,7 @@ class PlanetInfo extends Component {
     const AboutPlanetTable = styled.table`
       width:100%;
      p{
-      font-family: 'Barlow', sans-serif;
+        font-family: 'Barlow', sans-serif;
         font-style: normal;
         font-weight: normal;
         font-size: 12px;
@@ -68,10 +56,46 @@ class PlanetInfo extends Component {
       }
     `;
 
+  const HeadTable = styled.tr`
+
+  `;
+
+
+    /////Styles End///
+
+
+class PlanetInfo extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      planets: [],
+      toggle: false
+    };
+  }
+FilterArrow = () =>{
+ 
+       return <><img src={blackDownArrow}/><img src={blackUpArrow} /></>
+    
+ } 
+
+ onSortFunction = (e) =>
+ {
+    console.log(e);
+ }
+  onToggle = () => {
+    this.setState({ toggle: !this.state.toggle });
+  };
+
+  componentDidMount() {}
+
+  render() {    
+
     const TableGenerator = this.props.planetInfo.planets.map((p, num) => (
       <ObjectInList key={num} open={this.state.expanded} PlanetNumber={p} />
     ));
 
+    
     return (
       <TitleWrapper>
         <FilmTitle onClick={this.onToggle}>
@@ -85,15 +109,15 @@ class PlanetInfo extends Component {
         {this.state.toggle && (
           <AboutPlanetTable>
             <thead>
-              <tr>
-                <th><p>Planet Name</p></th>
-                <th><p>Rotation period</p></th>
-                <th><p>Orbital period</p></th>
-                <th><p>Diameter</p></th>
-                <th><p>Climate</p></th>
-                <th><p>Surface water</p></th>
-                <th><p>Population</p></th>
-              </tr>
+              <HeadTable>
+                <th><p onClick={this.onSortFunction}>Planet Name{this.FilterArrow()}</p></th>
+                <th><p>Rotation period{this.FilterArrow()}</p></th>
+                <th><p>Orbital period{this.FilterArrow()}</p></th>
+                <th><p>Diameter{this.FilterArrow()}</p></th>
+                <th><p>Climate{this.FilterArrow()}</p></th>
+                <th><p>Surface water{this.FilterArrow()}</p></th>
+                <th><p>Population{this.FilterArrow()}</p></th>
+              </HeadTable>
             </thead>
             <tbody>{TableGenerator}</tbody>
           </AboutPlanetTable>
