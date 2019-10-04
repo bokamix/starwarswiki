@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 const TableWrapper = styled.div`
-    display:flex;
-    background:white;
-    &:nth-child(even){
-        background: #f2f2f2;
-    }
+  display: flex;
+  background: white;
+  &:nth-child(even) {
+    background: #f2f2f2;
+  }
 `;
 class ObjectInList extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class ObjectInList extends Component {
             <li>surface_water</li>
             <li>population</li>
           </ul>
-          <ul className="mobile-table" >
+          <ul className="mobile-table">
             <li className="planet-name">{data.name}</li>
             <li>{data.rotation_period}</li>
             <li>{data.orbital_period}</li>

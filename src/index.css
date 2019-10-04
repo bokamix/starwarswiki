@@ -1,59 +1,53 @@
-@import url('https://fonts.googleapis.com/css?family=Barlow&display=swap');
-*{box-sizing: border-box;}
+@import url("https://fonts.googleapis.com/css?family=Barlow&display=swap");
+
+* {
+  box-sizing: border-box;
+}
 
 body {
-   padding: 0;
+  padding: 0;
   font-family: sans-serif;
-  
-  
 }
 
-.jumbotron{
-  background-color: #E0E6EE; 
-}
-
-.user-details{
-  padding: 10px;
-  background: #607D8B;
-  border-radius: 5px;
-}
-
-ul{
+ul {
   list-style: none;
 }
-.App{
+
+.App {
   background-color: #e0e6ee;
-  border-radius: 8px; 
-  margin:0 auto;
-  margin-top:48px;
+  border-radius: 8px;
+  margin: 0 auto;
+  margin-top: 48px;
   width: 95%;
 }
-@media all and (min-width: 806px) { 
-.App{  
-  background-color: #e0e6ee;
-  margin:0 auto;
-  width: 790px;
-  border-radius: 8px; 
-  margin-top:96px;
-}
 
-
-}
-.errorTitle{
-  color:red;
-}
-.errorButton{
-  background: #E0E6EE!important;
-  color: #FFFFFF!important;
-  cursor: default!important;
-}
-
-@media all and (min-width: 806px){
-  .mobile-table{
-    display:none;
+@media all and (min-width: 806px) {
+  .App {
+    background-color: #e0e6ee;
+    margin: 0 auto;
+    width: 790px;
+    border-radius: 8px;
+    margin-top: 96px;
   }
 }
-.mobile-table{
+
+.errorTitle {
+  color: red;
+}
+
+.errorButton {
+  background: #e0e6ee !important;
+  color: #ffffff !important;
+  cursor: default !important;
+}
+
+@media all and (min-width: 806px) {
+  .mobile-table {
+    display: none;
+  }
+}
+
+.mobile-table {
   font-family: "Barlow", sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -61,14 +55,13 @@ ul{
   line-height: 17px;
   color: #474747;
 }
-.planet-name{
-  color: #00687F;
 
+.planet-name {
+  color: #00687f;
 }
 
-
-@media all and (max-width: 806px){
-  .desktop-table{
-    display:none;
+@media all and (max-width: 806px) {
+  .desktop-table {
+    display: none;
   }
 }

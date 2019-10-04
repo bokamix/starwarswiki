@@ -14,7 +14,9 @@ import LoaderArrows from "./assets/LoaderArrows.png";
 const AppWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
- @media all and (min-width: 806px) { min-width: 736px;}
+  @media all and (min-width: 806px) {
+    min-width: 736px;
+  }
   position: relative;
 `;
 const spin = keyframes`
@@ -25,8 +27,10 @@ const spin = keyframes`
 const LoaderArrowsWrapper = styled.img`
   position: absolute;
   top: 288px;
-  left:45%;
-  @media all and (min-width: 806px){left: 371px;}
+  left: 45%;
+  @media all and (min-width: 806px) {
+    left: 371px;
+  }
   transform-origin: center;
   -webkit-animation: ${spin} 2s ease-in-out infinite;
   -moz-animation: ${spin} 2s ease-in-out infinite;
@@ -39,19 +43,23 @@ const LogoWrapper = styled.div`
   padding-top: 32px;
 `;
 const LogoImg = styled.img`
-width:222px;
-@media all and (min-width: 806px) {width:315px; }
+  width: 222px;
+  @media all and (min-width: 806px) {
+    width: 315px;
+  }
 `;
 
 const AddFilmWrapper = styled.div`
- @media all and (min-width: 806px) {  width: 730px;} 
- 
+  @media all and (min-width: 806px) {
+    width: 730px;
+  }
+
   background: white;
   margin: 0 auto;
   margin: 16px 30px;
 `;
 const InputsWrapper = styled.div`
-  padding-top: 31px;  
+  padding-top: 31px;
   margin: 0 auto;
   margin: 16px 30px;
   font-family: "Barlow", sans-serif;
@@ -63,11 +71,13 @@ const InputsWrapper = styled.div`
 `;
 const ErrorValidationComunicat = styled.div`
   width: 100%;
-  height:42px;
-  @media all and (min-width: 428px){height:32px;}
+  height: 42px;
+  @media all and (min-width: 428px) {
+    height: 32px;
+  }
   border: red 1px solid;
   box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.5);
-  p{
+  p {
     margin-block-start: 0em;
     margin-block-end: 0em;
     margin-inline-start: 0px;
@@ -77,8 +87,8 @@ const ErrorValidationComunicat = styled.div`
     font-weight: normal;
     font-size: 12px;
     line-height: 14px;
-    padding-left:8px;
-    margin-top:7px;
+    padding-left: 8px;
+    margin-top: 7px;
   }
 `;
 
@@ -92,8 +102,10 @@ const ButtonLabel = styled.label`
 
 const OneInputWrapper = styled.div`
   position: relative;
-  @media all and (min-width: 806px){width:540px;}
-  margin:0 auto;
+  @media all and (min-width: 806px) {
+    width: 540px;
+  }
+  margin: 0 auto;
   :first-child {
     margin-bottom: 17px;
   }
@@ -124,9 +136,9 @@ const COPYRIGHTWrapper = styled.div`
 const AddFilmButton = styled.div`
   display: flex;
   justify-content: flex-end;
-  
-  button {  
-    cursor: pointer;  
+
+  button {
+    cursor: pointer;
     width: 160px;
     height: 33px;
     background: #1ba1be;
@@ -152,8 +164,10 @@ const AddFilmButton = styled.div`
 `;
 const ListOfSearchResult = styled.div`
   position: absolute;
-  width:100%;
-  @media all and (min-width: 806px){width: 540px;}  
+  width: 100%;
+  @media all and (min-width: 806px) {
+    width: 540px;
+  }
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.5);
   p {
@@ -178,10 +192,11 @@ const ListOfSearchResult = styled.div`
 const PlanetToAddWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  @media all and (min-width: 806px){width:540px;}
-  margin:0 auto;
+  @media all and (min-width: 806px) {
+    width: 540px;
+  }
+  margin: 0 auto;
   div {
-    
     display: flex;
     align-items: baseline;
     justify-content: center;
@@ -259,9 +274,8 @@ class App extends Component {
       planetToAddUrl: [],
       toggle: false,
       loadingFilms: true,
-      filmTitleValidation: false,      
-      onBlurFilmTitle: false,
-     
+      filmTitleValidation: false,
+      onBlurFilmTitle: false
     };
   }
   ///Get Planet from SWAPI
@@ -273,8 +287,6 @@ class App extends Component {
       )
       .then(response => {
         this.setState({ films: response.data.results, loadingFilms: true });
-        ///We will use Lodash to minimalize number of GET method
-        ///Must add error message
       })
       .catch(err => {
         console.log(`Error, not conection with SWAPI. Number of error: ${err}`);
@@ -298,8 +310,6 @@ class App extends Component {
       .get(`${this.state.search}`)
       .then(response => {
         if (response.data.results === undefined) {
-          ///We will use Lodash to minimalize number of GET method
-          ///Must add error message
         } else {
           this.setState({ searchResult: response.data.results });
         }
@@ -327,22 +337,21 @@ class App extends Component {
         planet: [],
         planetToAdd: [],
         planetToAddUrl: [],
-        filmTitleValidation:false,
-        onBlurFilmTitle:false,
+        filmTitleValidation: false,
+        onBlurFilmTitle: false
       };
     });
   };
-  //Event who add planet to custom film lists planet
+  //Event adding planet to custom film lists planet
   onAddPlanet = event => {
     let number = [...event.target.parentNode.children].indexOf(event.target);
     this.state.planetToAdd.push(`${this.state.searchResult[number].name}`);
     this.state.planetToAddUrl.push(`${this.state.searchResult[number].url}`);
     this.setState({ searchResult: [], value: "" }); //reset value
   };
-///Reset list when onBlur
+  ///Reset list when onBlur
 
-
-//must add verification to double value
+  //must add verification to double value
 
   onDeletePlanet = num => {
     this.state.planetToAdd.splice(num, 1);
@@ -360,19 +369,13 @@ class App extends Component {
       this.state.valueName.length > 2 &&
       /^[A-Z]/.test(this.state.valueName)
     ) {
-      
       this.setState({ filmTitleValidation: true });
     } else this.setState({ filmTitleValidation: false });
-    
   };
-
-
 
   render() {
     const { films } = this.state;
-  
 
-    // this.state.valueName.length > 0 && this.state.planetToAdd.length > 0,
     return (
       <div className="App">
         <AppWrapper>
@@ -399,7 +402,7 @@ class App extends Component {
               <InputsWrapper>
                 {/* Film to ADD*/}
                 <OneInputWrapper>
-                  <ButtonLabel   ///??????????????????????????????
+                  <ButtonLabel
                     className={
                       !this.state.filmTitleValidation &&
                       this.state.onBlurFilmTitle
@@ -418,7 +421,9 @@ class App extends Component {
                   />
                   {!this.state.filmTitleValidation &&
                   this.state.onBlurFilmTitle ? (
-                    <ErrorValidationComunicat><p>Movie tittle name must start with a capital letter.</p></ErrorValidationComunicat>
+                    <ErrorValidationComunicat>
+                      <p>Movie tittle name must start with a capital letter.</p>
+                    </ErrorValidationComunicat>
                   ) : (
                     ``
                   )}
@@ -442,26 +447,23 @@ class App extends Component {
                     type="text"
                     value={this.state.value}
                     onChange={this.onHandleSearch}
-                 
                     placeholder="Seacrh for the the planet in database"
                   />
                   <ListOfSearchResult>
-                  {this.state.searchResult.map((name, num) => {
-                    return (
-                      <p onClick={this.onAddPlanet} key={num}>
-                        {name.name}
-                      </p>
-                    );
-                  })}
-                </ListOfSearchResult>
+                    {this.state.searchResult.map((name, num) => {
+                      return (
+                        <p onClick={this.onAddPlanet} key={num}>
+                          {name.name}
+                        </p>
+                      );
+                    })}
+                  </ListOfSearchResult>
                 </OneInputWrapper>
-                
+
                 <AddFilmButton>
                   <button
                     className={
-                      !this.state.filmTitleValidation 
-                        ? `errorButton`
-                        : ``
+                      !this.state.filmTitleValidation ? `errorButton` : ``
                     }
                     type="button"
                     onClick={this.onAddItem}

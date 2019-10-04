@@ -5,7 +5,7 @@ import ArrowOpen from "./assets/ARROWOPEN.svg";
 import SortArrows from "./assets/SortArrows.svg";
 import LoaderArrows from "./assets/LoaderArrowsS.png";
 import { debounce } from "lodash";
-import MobileTable from './MobileTable'
+import MobileTable from "./MobileTable";
 const swapi = require("swapi-node");
 
 /////Styles ////
@@ -13,7 +13,7 @@ const FilmTitle = styled.div`
   background: white;
   display: flex;
   flex-wrap: nowrap;
-  cursor:pointer;
+  cursor: pointer;
   width: 100%;
   height: 48px;
   align-items: center;
@@ -35,7 +35,9 @@ const FilmTitle = styled.div`
 const TitleWrapper = styled.div`
   border-radius: 4px;
   box-shadow: 0px 2px 1px rgba(196, 196, 196, 0.2);
-  @media all and (min-width: 806px) { width: 730px;}
+  @media all and (min-width: 806px) {
+    width: 730px;
+  }
   margin: 16px 30px;
   background: white;
 `;
@@ -63,14 +65,13 @@ const AboutPlanetTable = styled.table`
     td:first-child {
       color: #00687f;
     }
-    th{
-      p{
-        cursor:pointer;
-        img{
-          cursor:default;
+    th {
+      p {
+        cursor: pointer;
+        img {
+          cursor: default;
         }
       }
-      
     }
     th:first-child {
       color: #00687f;
@@ -120,7 +121,7 @@ class PlanetInfo extends Component {
       planetsInfo: [],
       loadingPlanets: false,
       noOnePlanet: false,
-      sortToggle: false,
+      sortToggle: false
     };
   }
   componentDidMount() {
@@ -162,7 +163,7 @@ class PlanetInfo extends Component {
   }, 1600);
 
   onSortFunction = e => {
-    this.setState({sortToggle: !this.state.sortToggle})   
+    this.setState({ sortToggle: !this.state.sortToggle });
     function dynamicSort(property) {
       var sortOrder = 1;
       if (property[0] === "-") {
@@ -170,28 +171,17 @@ class PlanetInfo extends Component {
         property = property.substr(1);
       }
       return function(a, b) {
-        /* next line works with strings and numbers,
-         * and you may want to customize it to your needs
-         */
         var result =
           a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
         return result * sortOrder;
       };
     }
     function dynamicSortMultiple() {
-      /*
-       * save the arguments object as it will be overwritten
-       * note that arguments object is an array-like object
-       * consisting of the names of the properties to sort by
-       */
       var props = arguments;
       return function(obj1, obj2) {
         var i = 0,
           result = 0,
           numberOfProperties = props.length;
-        /* try getting a different result from 0 (equal)
-         * as long as we have extra properties to compare
-         */
         while (result === 0 && i < numberOfProperties) {
           result = dynamicSort(props[i])(obj1, obj2);
           i++;
@@ -200,8 +190,9 @@ class PlanetInfo extends Component {
       };
     }
     //////From string to number ////////
+    ///Propably i can do this easier, but i do not have to more time ////
     let i;
-    for (i = 0; i < this.state.planetsInfo.length; i++) { 
+    for (i = 0; i < this.state.planetsInfo.length; i++) {
       if (this.state.planetsInfo[i].population === "unknown") {
         this.state.planetsInfo[i].population = -123124124124124124124124;
       } else {
@@ -243,35 +234,41 @@ class PlanetInfo extends Component {
         );
       }
     }
-  //////END From string to number END ////////
-    let accessKeyPosition = `${!this.state.sortToggle ? `-` : ``}${e.target.accessKey}`;    
-    this.state.planetsInfo.sort(dynamicSortMultiple(accessKeyPosition));    
+    //////END From string to number END ////////
+    let accessKeyPosition = `${!this.state.sortToggle ? `-` : ``}${
+      e.target.accessKey
+    }`;
+    this.state.planetsInfo.sort(dynamicSortMultiple(accessKeyPosition));
     this.setState({ loadingPlanets: false });
     this.setState({ loadingPlanets: true });
-//////Back unkown element to string////////
-console.log(`dsawf`)
-for (i = 0; i < this.state.planetsInfo.length; i++) { 
-  if (this.state.planetsInfo[i].population === -123124124124124124124124) {
-    this.state.planetsInfo[i].population ="unknown" ;  
-  }
-  if (this.state.planetsInfo[i].orbital_period === -123124124124124124124124) {
-    this.state.planetsInfo[i].orbital_period ="unknown" ;  
-  }
-  if (this.state.planetsInfo[i].rotation_period === -123124124124124124124124) {
-    this.state.planetsInfo[i].rotation_period ="unknown" ;  
-  }
-  if (this.state.planetsInfo[i].surface_water === -123124124124124124124124) {
-    this.state.planetsInfo[i].surface_water ="unknown" ;  
-  }
+    //////Back unkown element to string////////
+    console.log(`dsawf`);
+    for (i = 0; i < this.state.planetsInfo.length; i++) {
+      if (this.state.planetsInfo[i].population === -123124124124124124124124) {
+        this.state.planetsInfo[i].population = "unknown";
+      }
+      if (
+        this.state.planetsInfo[i].orbital_period === -123124124124124124124124
+      ) {
+        this.state.planetsInfo[i].orbital_period = "unknown";
+      }
+      if (
+        this.state.planetsInfo[i].rotation_period === -123124124124124124124124
+      ) {
+        this.state.planetsInfo[i].rotation_period = "unknown";
+      }
+      if (
+        this.state.planetsInfo[i].surface_water === -123124124124124124124124
+      ) {
+        this.state.planetsInfo[i].surface_water = "unknown";
+      }
 
-  if (this.state.planetsInfo[i].  diameter === -123124124124124124124124) {
-    this.state.planetsInfo[i].  diameter ="unknown" ;  }}
-////// END  Back unkown element to string END////////
-
-
-
+      if (this.state.planetsInfo[i].diameter === -123124124124124124124124) {
+        this.state.planetsInfo[i].diameter = "unknown";
+      }
+    }
+    ////// END  Back unkown element to string END////////
   };
-
 
   onToggle = () => {
     this.setState({ toggle: !this.state.toggle });
@@ -284,8 +281,10 @@ for (i = 0; i < this.state.planetsInfo.length; i++) {
 
   render() {
     const TableWrapper = styled.div`
-    height: ${`${147 * this.props.filmInfo.planets.length}px`};
-      @media all and (min-width: 806px){height: ${`${37 + 47 * this.props.filmInfo.planets.length}px`};}
+      height: ${`${147 * this.props.filmInfo.planets.length}px`};
+      @media all and (min-width: 806px) {
+        height: ${`${37 + 47 * this.props.filmInfo.planets.length}px`};
+      }
       width: 100%;
       position: relative;
     `;
@@ -393,14 +392,11 @@ for (i = 0; i < this.state.planetsInfo.length; i++) {
                 </AboutPlanetTable>
               </>
             )}
-            {this.state.planetsInfo.map((p, num) => <MobileTable data={p} key={num} />)}
+            {this.state.planetsInfo.map((p, num) => (
+              <MobileTable data={p} key={num} />
+            ))}
           </TableWrapper>
-        
-        )}   
-               
-        
-                   
-          
+        )}
       </TitleWrapper>
     );
   }
