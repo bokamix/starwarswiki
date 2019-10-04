@@ -2,10 +2,12 @@
   "name": "star-wars-wiki",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://bokamix.github.io/starwarswiki/",
   "dependencies": {
     "@apollo/react-hooks": "^3.1.1",
     "apollo-boost": "^0.4.4",
     "axios": "^0.19.0",
+    "gh-pages": "^2.1.1",
     "graphql": "^14.5.8",
     "react": "^16.10.1",
     "react-apollo": "^3.1.1",
@@ -19,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
