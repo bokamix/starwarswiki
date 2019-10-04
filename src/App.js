@@ -275,7 +275,8 @@ class App extends Component {
       toggle: false,
       loadingFilms: true,
       filmTitleValidation: false,
-      onBlurFilmTitle: false
+      onBlurFilmTitle: false,
+      yourFilms:[],
     };
   }
   ///Get Planet from SWAPI
@@ -287,18 +288,31 @@ class App extends Component {
       )
       .then(response => {
         this.setState({ films: response.data.results, loadingFilms: true });
+        this.getFilmsFromStorage()        
+        console.log(this.state.films)
       })
       .catch(err => {
         console.log(`Error, not conection with SWAPI. Number of error: ${err}`);
       });
+   
   }
   ///Get Planet from SWAPI when component is load
-  componentDidMount() {
-    this.getFilms();
-  }
+  componentDidMount() { 
+    this.getFilms();    
+      }
   onChangeValue = event => {
     this.setState({ valueName: event.target.value });
   };
+
+  getFilmsFromStorage = () =>
+  {
+    if(JSON.parse(localStorage.getItem('YoursFilms'))){
+    JSON.parse(localStorage.getItem('YoursFilms')).map((name) => {
+      this.state.films.push(name)
+      this.state.yourFilms.push(name)
+      this.setState({...this.state.ilms})
+    })}
+  }
 
   ///Search Event
   onHandleSearch = event => {
@@ -312,6 +326,7 @@ class App extends Component {
         if (response.data.results === undefined) {
         } else {
           this.setState({ searchResult: response.data.results });
+          
         }
       })
       .catch(err => {
@@ -324,10 +339,18 @@ class App extends Component {
       this.state.searchResult.map((name, num) => {
         this.state.planet.push(`${name.url}`);
       });
+      
       const films = [
         ...state.films,
         { title: state.valueName, planets: state.planetToAddUrl }
       ];
+      var newItem = 
+          {
+          'title': this.state.valueName,
+          'planets': this.state.planetToAddUrl,
+          };
+      this.state.yourFilms.push(newItem);
+      localStorage.setItem('YoursFilms', JSON.stringify(this.state.yourFilms));
 
       return {
         films,
@@ -375,7 +398,7 @@ class App extends Component {
 
   render() {
     const { films } = this.state;
-
+   
     return (
       <div className="App">
         <AppWrapper>
