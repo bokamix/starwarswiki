@@ -23,7 +23,7 @@ I tried to work around the errors through Heroku app.
 
 The project is available at the addresses.
 Netlify: https://mproject.netlify.com/
-Git Sites: 
+Git Sites: https://bokamix.github.io/starwarswiki/
 Gir repositorie: https://github.com/bokamix/starwarswiki
 
 ## Available Scripts
