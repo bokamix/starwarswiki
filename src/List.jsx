@@ -4,8 +4,8 @@ import styled from 'styled-components';
 class List extends Component {
   render() {
     const films = this.props.films;
-    const FilmPlanetList = styled.div`     
-     min-height:462px;
+    const FilmPlanetList = styled.div`  
+     @media all and (min-width: 806px) {   min-height:462px;}     
      border-bottom:dashed 2px #FFFFFF; 
      margin-bottom:30px;
   `;

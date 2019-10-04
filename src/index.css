@@ -21,15 +21,24 @@ body {
 ul{
   list-style: none;
 }
-
 .App{
+  background-color: #e0e6ee;
+  border-radius: 8px; 
+  margin:0 auto;
+  margin-top:48px;
+  width: 95%;
+}
+@media all and (min-width: 806px) { 
+.App{  
   background-color: #e0e6ee;
   margin:0 auto;
   width: 790px;
   border-radius: 8px; 
-
+  margin-top:96px;
 }
 
+
+}
 .errorTitle{
   color:red;
 }

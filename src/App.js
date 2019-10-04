@@ -14,7 +14,7 @@ import LoaderArrows from "./assets/LoaderArrows.png";
 const AppWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
-  min-width: 736px;
+ @media all and (min-width: 806px) { min-width: 736px;}
   position: relative;
 `;
 const spin = keyframes`
@@ -37,17 +37,22 @@ const LogoWrapper = styled.div`
   margin: 0 auto;
   padding-top: 32px;
 `;
-const LogoImg = styled.img``;
+const LogoImg = styled.img`
+width:222px;
+@media all and (min-width: 806px) {width:315px; }
+`;
 
 const AddFilmWrapper = styled.div`
-  width: 730px;
+ @media all and (min-width: 806px) {  width: 730px;} 
+ 
   background: white;
   margin: 0 auto;
+  margin: 16px 30px;
 `;
 const InputsWrapper = styled.div`
-  padding-top: 31px;
-  width: 539px;
+  padding-top: 31px;  
   margin: 0 auto;
+  margin: 16px 30px;
   font-family: "Barlow", sans-serif;
   font-style: normal;
   font-weight: normal;

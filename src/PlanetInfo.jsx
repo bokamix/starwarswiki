@@ -33,7 +33,7 @@ const FilmTitle = styled.div`
 const TitleWrapper = styled.div`
   border-radius: 4px;
   box-shadow: 0px 2px 1px rgba(196, 196, 196, 0.2);
-  width: 730px;
+  @media all and (min-width: 806px) { width: 730px;}
   margin: 16px 30px;
   background: white;
 `;
