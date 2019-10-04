@@ -13,6 +13,7 @@ const FilmTitle = styled.div`
   background: white;
   display: flex;
   flex-wrap: nowrap;
+  cursor:pointer;
   width: 100%;
   height: 48px;
   align-items: center;
@@ -61,6 +62,15 @@ const AboutPlanetTable = styled.table`
   tr {
     td:first-child {
       color: #00687f;
+    }
+    th{
+      p{
+        cursor:pointer;
+        img{
+          cursor:default;
+        }
+      }
+      
     }
     th:first-child {
       color: #00687f;

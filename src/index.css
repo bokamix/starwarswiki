@@ -45,6 +45,7 @@ ul{
 .errorButton{
   background: #E0E6EE!important;
   color: #FFFFFF!important;
+  cursor: default!important;
 }
 
 @media all and (min-width: 806px){

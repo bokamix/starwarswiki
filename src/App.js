@@ -25,7 +25,8 @@ const spin = keyframes`
 const LoaderArrowsWrapper = styled.img`
   position: absolute;
   top: 288px;
-  left: 371px;
+  left:45%;
+  @media all and (min-width: 806px){left: 371px;}
   transform-origin: center;
   -webkit-animation: ${spin} 2s ease-in-out infinite;
   -moz-animation: ${spin} 2s ease-in-out infinite;
@@ -62,7 +63,8 @@ const InputsWrapper = styled.div`
 `;
 const ErrorValidationComunicat = styled.div`
   width: 100%;
-  height:32px;
+  height:42px;
+  @media all and (min-width: 428px){height:32px;}
   border: red 1px solid;
   box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.5);
   p{
@@ -122,8 +124,9 @@ const COPYRIGHTWrapper = styled.div`
 const AddFilmButton = styled.div`
   display: flex;
   justify-content: flex-end;
-
-  button {
+  
+  button {  
+    cursor: pointer;  
     width: 160px;
     height: 33px;
     background: #1ba1be;
@@ -175,7 +178,10 @@ const ListOfSearchResult = styled.div`
 const PlanetToAddWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  @media all and (min-width: 806px){width:540px;}
+  margin:0 auto;
   div {
+    
     display: flex;
     align-items: baseline;
     justify-content: center;
@@ -203,6 +209,7 @@ const OpenClosseArrowWrapper = styled.div`
   align-items: center;
 `;
 const AddFilmColapse = styled.div`
+  cursor: pointer;
   background: white;
   display: flex;
   flex-wrap: nowrap;
@@ -331,9 +338,12 @@ class App extends Component {
     this.state.planetToAdd.push(`${this.state.searchResult[number].name}`);
     this.state.planetToAddUrl.push(`${this.state.searchResult[number].url}`);
     this.setState({ searchResult: [], value: "" }); //reset value
-
-    //must add verification to double value
   };
+///Reset list when onBlur
+
+
+//must add verification to double value
+
   onDeletePlanet = num => {
     this.state.planetToAdd.splice(num, 1);
     this.state.planetToAddUrl.splice(num, 1);
@@ -432,6 +442,7 @@ class App extends Component {
                     type="text"
                     value={this.state.value}
                     onChange={this.onHandleSearch}
+                 
                     placeholder="Seacrh for the the planet in database"
                   />
                   <ListOfSearchResult>
