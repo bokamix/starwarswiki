@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import styled from "styled-components";
 const TableWrapper = styled.div`
   display: flex;
@@ -7,7 +8,7 @@ const TableWrapper = styled.div`
     background: #f2f2f2;
   }
 `;
-class ObjectInList extends Component {
+class MobileTable extends Component {
   constructor(props) {
     super(props);
 
@@ -15,6 +16,7 @@ class ObjectInList extends Component {
   }
 
   render() {
+    console.log(this.props.data)
     const data = this.props.data;
     return (
       <>
@@ -42,5 +44,8 @@ class ObjectInList extends Component {
     );
   }
 }
+MobileTable.propTypes = {
+  data: PropTypes.array.isRequired,
+ };
 
-export default ObjectInList;
+export default MobileTable;

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import styled, { keyframes } from "styled-components";
 import ArrowClose from "./assets/ARROWCLOSE.svg";
 import ArrowOpen from "./assets/ARROWOPEN.svg";
@@ -288,7 +289,6 @@ class PlanetInfo extends Component {
       width: 100%;
       position: relative;
     `;
-
     return (
       <TitleWrapper>
         <FilmTitle onClick={this.onToggle}>
@@ -401,5 +401,7 @@ class PlanetInfo extends Component {
     );
   }
 }
-
+PlanetInfo.propTypes = {
+ filmInfo: PropTypes.object.isRequired,
+};
 export default PlanetInfo;

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from "react";
 import PlanetInfo from "./PlanetInfo";
 import styled from "styled-components";
@@ -22,5 +23,7 @@ class List extends Component {
     );
   }
 }
-
+List.propTypes = {
+  films: PropTypes.array.isRequired,
+};
 export default List;
