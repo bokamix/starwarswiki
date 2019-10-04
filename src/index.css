@@ -46,3 +46,28 @@ ul{
   background: #E0E6EE!important;
   color: #FFFFFF!important;
 }
+
+@media all and (min-width: 806px){
+  .mobile-table{
+    display:none;
+  }
+}
+.mobile-table{
+  font-family: "Barlow", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #474747;
+}
+.planet-name{
+  color: #00687F;
+
+}
+
+
+@media all and (max-width: 806px){
+  .desktop-table{
+    display:none;
+  }
+}

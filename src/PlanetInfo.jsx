@@ -5,6 +5,7 @@ import ArrowOpen from "./assets/ARROWOPEN.svg";
 import SortArrows from "./assets/SortArrows.svg";
 import LoaderArrows from "./assets/LoaderArrowsS.png";
 import { debounce } from "lodash";
+import MobileTable from './MobileTable'
 const swapi = require("swapi-node");
 
 /////Styles ////
@@ -273,7 +274,8 @@ for (i = 0; i < this.state.planetsInfo.length; i++) {
 
   render() {
     const TableWrapper = styled.div`
-      height: ${`${37 + 47 * this.props.filmInfo.planets.length}px`};
+    height: ${`${147 * this.props.filmInfo.planets.length}px`};
+      @media all and (min-width: 806px){height: ${`${37 + 47 * this.props.filmInfo.planets.length}px`};}
       width: 100%;
       position: relative;
     `;
@@ -285,7 +287,7 @@ for (i = 0; i < this.state.planetsInfo.length; i++) {
             <h1>{this.props.filmInfo.title}</h1>
           </div>
           <div>
-            <img src={this.state.toggle ? ArrowClose : ArrowOpen} />
+            <img src={!this.state.toggle ? ArrowClose : ArrowOpen} />
           </div>
         </FilmTitle>
 
@@ -300,7 +302,7 @@ for (i = 0; i < this.state.planetsInfo.length; i++) {
               </NoOnePlanetWrapper>
             ) : (
               <>
-                <AboutPlanetTable>
+                <AboutPlanetTable className="desktop-table">
                   <thead>
                     <HeadTable>
                       <th>
@@ -381,8 +383,14 @@ for (i = 0; i < this.state.planetsInfo.length; i++) {
                 </AboutPlanetTable>
               </>
             )}
+            {this.state.planetsInfo.map((p, num) => <MobileTable data={p} key={num} />)}
           </TableWrapper>
-        )}
+        
+        )}   
+               
+        
+                   
+          
       </TitleWrapper>
     );
   }

@@ -90,6 +90,8 @@ const ButtonLabel = styled.label`
 
 const OneInputWrapper = styled.div`
   position: relative;
+  @media all and (min-width: 806px){width:540px;}
+  margin:0 auto;
   :first-child {
     margin-bottom: 17px;
   }
@@ -147,7 +149,8 @@ const AddFilmButton = styled.div`
 `;
 const ListOfSearchResult = styled.div`
   position: absolute;
-  width: 540px;
+  width:100%;
+  @media all and (min-width: 806px){width: 540px;}  
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.5);
   p {
@@ -168,6 +171,7 @@ const ListOfSearchResult = styled.div`
     border-bottom: 1px solid #e5e5e5;
   }
 `;
+
 const PlanetToAddWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -430,8 +434,7 @@ class App extends Component {
                     onChange={this.onHandleSearch}
                     placeholder="Seacrh for the the planet in database"
                   />
-                </OneInputWrapper>
-                <ListOfSearchResult>
+                  <ListOfSearchResult>
                   {this.state.searchResult.map((name, num) => {
                     return (
                       <p onClick={this.onAddPlanet} key={num}>
@@ -440,6 +443,8 @@ class App extends Component {
                     );
                   })}
                 </ListOfSearchResult>
+                </OneInputWrapper>
+                
                 <AddFilmButton>
                   <button
                     className={
