@@ -8,6 +8,13 @@ For efficiency, it would be better to download all the planets on one query and 
 In app.js I download a list of movies, I put there the function of adding movies.
 To styling project i used styled-component and normal css file. 
 
+Props-types
+Its done
+
+LocalStorage
+
+Its done to
+
 GraphQL
 To connect with data i used swapmi npm api. 
 I tried to download data via GraphQL. Unfortunately, the GraphQL api is probably misconfigured and forwards access denied.
@@ -16,7 +23,7 @@ I tried to work around the errors through Heroku app.
 
 The project is available at the addresses.
 Netlify: https://mproject.netlify.com/
-Git Sites: 
+Git Sites: https://bokamix.github.io/starwarswiki/
 Gir repositorie: https://github.com/bokamix/starwarswiki
 
 ## Available Scripts
