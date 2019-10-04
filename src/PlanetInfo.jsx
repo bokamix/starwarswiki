@@ -4,7 +4,7 @@ import ArrowClose from "./assets/ARROWCLOSE.svg";
 import ArrowOpen from "./assets/ARROWOPEN.svg";
 import SortArrows from './assets/SortArrows.svg'
 import LoaderArrows from './assets/LoaderArrowsS.png';
-
+import {debounce} from 'lodash';
 const swapi = require("swapi-node");
 
 
@@ -132,7 +132,7 @@ FilterArrow = () =>{
          return <><img src={SortArrows}/></>    
  } 
  
- getPlanets= () => {   
+ getPlanets= debounce(() => {   
  
   this.setState({ planetsInfo:[]}); 
   this.props.filmInfo.planets.map((p, num) => {
@@ -153,7 +153,7 @@ FilterArrow = () =>{
 });
   })
 })
-}
+}, 1000);
 
 
  onSortFunction = (e) =>
