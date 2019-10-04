@@ -127,7 +127,7 @@ class PlanetInfo extends Component {
   }
   componentDidMount() {
     this.setState({ planetsInfo: [] });
-    if (this.props.filmInfo.planets.length == 0) {
+    if (this.props.filmInfo.planets.length === 0) {
       this.setState({ loadingPlanets: true, noOnePlanet: true });
     }
   }
@@ -135,14 +135,14 @@ class PlanetInfo extends Component {
   FilterArrow = () => {
     return (
       <>
-        <img src={SortArrows} />
+        <img alt="SortArrows" src={SortArrows} />
       </>
     );
   };
 
   getPlanets = debounce(() => {
     this.setState({ planetsInfo: [] });
-    this.props.filmInfo.planets.map((p, num) => {
+    this.props.filmInfo.planets.forEach((p) => {
       this.setState({ loadingPlanets: false }, () => {
         ///I download the planet data separately, because it was specified in the task.
         /// For efficiency, it would be better to download all the planets on one query and then filter them.
@@ -243,7 +243,7 @@ class PlanetInfo extends Component {
     this.setState({ loadingPlanets: false });
     this.setState({ loadingPlanets: true });
     //////Back unkown element to string////////
-    console.log(`dsawf`);
+    
     for (i = 0; i < this.state.planetsInfo.length; i++) {
       if (this.state.planetsInfo[i].population === -123124124124124124124124) {
         this.state.planetsInfo[i].population = "unknown";
@@ -272,11 +272,9 @@ class PlanetInfo extends Component {
   };
 
   onToggle = () => {
-    this.setState({ toggle: !this.state.toggle });
-    {
-      this.state.toggle && this.setState({ planetsInfo: [] });
-      this.getPlanets();
-    }
+    this.setState({ toggle: !this.state.toggle });    
+    this.state.toggle && this.setState({ planetsInfo: [] });
+    this.getPlanets();    
     this.setState({ planetsInfo: [] });
   };
 
@@ -296,7 +294,7 @@ class PlanetInfo extends Component {
             <h1>{this.props.filmInfo.title}</h1>
           </div>
           <div>
-            <img src={!this.state.toggle ? ArrowClose : ArrowOpen} />
+            <img alt="opencloseArrow"src={!this.state.toggle ? ArrowClose : ArrowOpen} />
           </div>
         </FilmTitle>
 

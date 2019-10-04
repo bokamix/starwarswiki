@@ -16,9 +16,9 @@ class MobileTable extends Component {
   }
 
   render() {
-    console.log(this.props.data)
+    
     const data = this.props.data;
-    return (
+     return (
       <>
         <TableWrapper key={data.id}>
           <ul className="mobile-table">
@@ -44,8 +44,9 @@ class MobileTable extends Component {
     );
   }
 }
+
 MobileTable.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
  };
 
 export default MobileTable;

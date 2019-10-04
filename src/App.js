@@ -69,6 +69,10 @@ const InputsWrapper = styled.div`
   line-height: 19px;
   color: #474747;
 `;
+
+const DeleteButtonStyle = styled.img`
+cursor: pointer;
+`;
 const ErrorValidationComunicat = styled.div`
   width: 100%;
   height: 42px;
@@ -180,6 +184,7 @@ const ListOfSearchResult = styled.div`
     padding-left: 11px;
     border-left: 1px solid #e5e5e5;
     border-right: 1px solid #e5e5e5;
+    cursor: pointer;
   }
   p:first-child {
     border-top: 1px solid #e5e5e5;
@@ -289,7 +294,7 @@ class App extends Component {
       .then(response => {
         this.setState({ films: response.data.results, loadingFilms: true });
         this.getFilmsFromStorage()        
-        console.log(this.state.films)
+        
       })
       .catch(err => {
         console.log(`Error, not conection with SWAPI. Number of error: ${err}`);
@@ -307,7 +312,7 @@ class App extends Component {
   getFilmsFromStorage = () =>
   {
     if(JSON.parse(localStorage.getItem('YoursFilms'))){
-    JSON.parse(localStorage.getItem('YoursFilms')).map((name) => {
+    JSON.parse(localStorage.getItem('YoursFilms')).forEach((name) => {
       this.state.films.push(name)
       this.state.yourFilms.push(name)
       this.setState({...this.state.ilms})
@@ -336,7 +341,7 @@ class App extends Component {
   //event who add film to films list
   onAddItem = () => {
     this.setState(state => {
-      this.state.searchResult.map((name, num) => {
+      this.state.searchResult.forEach((name) => {
         this.state.planet.push(`${name.url}`);
       });
       
@@ -403,7 +408,7 @@ class App extends Component {
       <div className="App">
         <AppWrapper>
           <LogoWrapper>
-            <a href="">
+            <a href="/">
               <LogoImg src={StarLogo} />
             </a>
           </LogoWrapper>
@@ -418,7 +423,7 @@ class App extends Component {
                 <h1>Add movie</h1>
               </div>
               <OpenClosseArrowWrapper>
-                <img src={this.state.toggle ? ArrowClose : ArrowOpen} />
+                <img alt="CloseOpenArrow" src={this.state.toggle ? ArrowClose : ArrowOpen} />
               </OpenClosseArrowWrapper>
             </AddFilmColapse>
             {this.state.toggle && (
@@ -457,14 +462,14 @@ class App extends Component {
                       <div key={num}>
                         <p>{name}</p>
                         <span onClick={() => this.onDeletePlanet(num)}>
-                          <img src={DeleteButton} />
+                          <DeleteButtonStyle alt="DeleteButton" src={DeleteButton} />
                         </span>
                       </div>
                     );
                   })}
                 </PlanetToAddWrapper>
                 <OneInputWrapper>
-                  <img src={SearchIcon} />
+                  <img alt="SearchIcon" src={SearchIcon} />
                   <ButtonLabel>Add Planet</ButtonLabel>
                   <StyledInput
                     type="text"
