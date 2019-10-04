@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/starwarswiki/static/css/main.f42ee710.chunk.css",
+    "main.js": "/starwarswiki/static/js/main.51e67e0e.chunk.js",
+    "main.js.map": "/starwarswiki/static/js/main.51e67e0e.chunk.js.map",
+    "runtime-main.js": "/starwarswiki/static/js/runtime-main.a00fb882.js",
+    "runtime-main.js.map": "/starwarswiki/static/js/runtime-main.a00fb882.js.map",
+    "static/js/2.ee8f1aad.chunk.js": "/starwarswiki/static/js/2.ee8f1aad.chunk.js",
+    "static/js/2.ee8f1aad.chunk.js.map": "/starwarswiki/static/js/2.ee8f1aad.chunk.js.map",
+    "index.html": "/starwarswiki/index.html",
+    "precache-manifest.019b6018459a633ef8e1a669ab4c03f6.js": "/starwarswiki/precache-manifest.019b6018459a633ef8e1a669ab4c03f6.js",
+    "service-worker.js": "/starwarswiki/service-worker.js",
+    "static/css/main.f42ee710.chunk.css.map": "/starwarswiki/static/css/main.f42ee710.chunk.css.map",
+    "static/media/ARROWCLOSE.svg": "/starwarswiki/static/media/ARROWCLOSE.81e948ad.svg",
+    "static/media/ARROWOPEN.svg": "/starwarswiki/static/media/ARROWOPEN.da45c4c0.svg",
+    "static/media/DELETE.svg": "/starwarswiki/static/media/DELETE.4fdbb74f.svg",
+    "static/media/LOGO.svg": "/starwarswiki/static/media/LOGO.79977f05.svg",
+    "static/media/SEARCH.svg": "/starwarswiki/static/media/SEARCH.d8b5abdd.svg",
+    "static/media/SortArrows.svg": "/starwarswiki/static/media/SortArrows.90bdefe4.svg"
+  }
+}
