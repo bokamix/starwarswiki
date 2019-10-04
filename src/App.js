@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import List from "./List";
 import axios from "axios";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import DeleteButton from "./assets/DELETE.svg";
 import StarLogo from "./assets/LOGO.svg";
 import ArrowClose from "./assets/ARROWCLOSE.svg";
 import ArrowOpen from "./assets/ARROWOPEN.svg";
-import SearchIcon from './assets/SEARCH.svg';
-import LoaderArrows from './assets/LoaderArrows.svg';
+import SearchIcon from "./assets/SEARCH.svg";
+import LoaderArrows from "./assets/LoaderArrows.png";
 
 ///style///
 
@@ -15,17 +15,22 @@ const AppWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
   min-width: 736px;
-  position:relative;
-
+  position: relative;
 `;
-const LoaderArrowsWrapper = styled.img`
-      transform: rotate(360deg);
-       transform-origin: top left;
-      position:absolute;
-      top:288px;
-      left:371px;   
-  `;
+const spin = keyframes`
+    from {transform: rotate(0deg);}
+    to    {transform: rotate(360deg);}
+    `;
 
+const LoaderArrowsWrapper = styled.img`
+  position: absolute;
+  top: 288px;
+  left: 371px;
+  transform-origin: center;
+  -webkit-animation: ${spin} 2s ease-in-out infinite;
+  -moz-animation: ${spin} 2s ease-in-out infinite;
+  animation: ${spin} 2s ease-in-out infinite;
+`;
 
 const LogoWrapper = styled.div`
   text-align: center;
@@ -50,6 +55,26 @@ const InputsWrapper = styled.div`
   line-height: 19px;
   color: #474747;
 `;
+const ErrorValidationComunicat = styled.div`
+  width: 100%;
+  height:32px;
+  border: red 1px solid;
+  box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.5);
+  p{
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-family: "Barlow", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    padding-left:8px;
+    margin-top:7px;
+  }
+`;
+
 const ButtonLabel = styled.label`
   font-family: "Barlow", sans-serif;
   font-style: normal;
@@ -59,34 +84,23 @@ const ButtonLabel = styled.label`
 `;
 
 const OneInputWrapper = styled.div`
-    position:relative;
-    :first-child{
-      margin-bottom:17px;
-    }
-   img{
-     position:absolute;
-     bottom:7px;
-     right:0;
-   }
+  position: relative;
+  :first-child {
+    margin-bottom: 17px;
+  }
+  img {
+    position: absolute;
+    bottom: 7px;
+    right: 0;
+  }
 `;
-  
-const StyledInput = styled.input`
-  width: 100%;
-  border: none;
-  border-bottom: 1px #999999 solid;
-  font-family: "Barlow", sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 19px;
-  color: #474747;
-`;
+
 const COPYRIGHTWrapper = styled.div`
   margin: 0 auto;
   width: 100%;
   text-align: center;
   padding-top: 20px;
-  padding-bottom: 36px;
+  padding-bottom: 31px;
   p {
     font-family: "Barlow", sans-serif;
     font-style: normal;
@@ -99,108 +113,119 @@ const COPYRIGHTWrapper = styled.div`
 `;
 
 const AddFilmButton = styled.div`
-      display: flex;
-      justify-content:flex-end;
-      
-      button{
-        width: 160px;
-        height: 33px;
-        background: #1BA1BE;
-        border-radius: 4px;
-        text-align: center;
-        margin:31px 0;
-        text-decoration: none;
-        border:none;
-        p{
-          margin-block-start: 0em;
-          margin-block-end: 0em;
-          margin-inline-start: 0px;
-          margin-inline-end: 0px;
-          font-family: 'Barlow', sans-serif;
-          font-style: normal;
-          font-weight: bold;
-          font-size: 12px;
-          line-height: 16px;
-          color: #FFFFFF;
-          letter-spacing: 0.05em;   
-          
-  }}
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    width: 160px;
+    height: 33px;
+    background: #1ba1be;
+    border-radius: 4px;
+    text-align: center;
+    margin: 31px 0;
+    text-decoration: none;
+    border: none;
+    p {
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-family: "Barlow", sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 16px;
+      color: #ffffff;
+      letter-spacing: 0.05em;
+    }
+  }
 `;
 const ListOfSearchResult = styled.div`
-  position:absolute;
-  width: 540px;  
-  background: #FFFFFF;
+  position: absolute;
+  width: 540px;
+  background: #ffffff;
   box-shadow: 0px 4px 4px rgba(196, 196, 196, 0.5);
-    p{
+  p {
     margin-block-start: 0em;
     margin-block-end: 0em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    padding-top:13px;
-    padding-bottom:13px;
-    padding-left:11px; 
-    border-left: 1px solid #E5E5E5; 
-    border-right: 1px solid #E5E5E5; 
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 11px;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
   }
-  p:first-child{
-    border-top: 1px solid #E5E5E5; 
+  p:first-child {
+    border-top: 1px solid #e5e5e5;
   }
   p:last-child {
-    border-bottom: 1px solid #E5E5E5; 
+    border-bottom: 1px solid #e5e5e5;
   }
-  
 `;
 const PlanetToAddWrapper = styled.div`
-    display:flex;
-    flex-wrap:wrap;
-    div{
-      display:flex;
-      align-items:baseline;
-      flex-direction: row;
-      border: 1px solid #999999;
-      box-sizing: border-box;
-      justify-content:center;
-      border-radius: 18px;
-      padding:3px 16px;    
-      margin:10px;
-      margin-left:0;  
-      p{
-        display: block;
-        margin-block-start: 0em;
-        margin-block-end: 0em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-        margin-right:13px;
-        margin-top:6px;
-        margin-bottom:6px;
-      }
+  display: flex;
+  flex-wrap: wrap;
+  div {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-direction: row;
+    border: 1px solid #999999;
+    box-sizing: border-box;
+    border-radius: 18px;
+    padding: 3px 16px;
+    margin: 10px;
+    margin-left: 0;
+    p {
+      display: block;
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      margin-right: 13px;
+      margin-top: 6px;
+      margin-bottom: 6px;
     }
+  }
 `;
-
+const OpenClosseArrowWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 const AddFilmColapse = styled.div`
-      background: white;
-      display: flex;
-      flex-wrap: nowrap;
-      width: 100%;
-      height:48px;
-      align-items: baseline;
-      justify-content: space-between;
-      border-radius: 4px;
-      box-shadow: 0px 2px 1px rgba(196, 196, 196, 0.2);
-      h1 {
-        color: #00687F;
-        font-family: 'Barlow', sans-serif;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 19px;
-        
-      }
-      div {
-        padding: 0 15px;
-      }
-    `;
-
+  background: white;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px rgba(196, 196, 196, 0.2);
+  h1 {
+    color: #00687f;
+    font-family: "Barlow", sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+  }
+  div {
+    padding: 0 15px;
+  }
+`;
+const StyledInput = styled.input`
+  width: 100%;
+  border: none;
+  border-bottom: 1px #999999 solid;
+  font-family: "Barlow", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: #474747;
+`;
 
 //style end//
 
@@ -218,25 +243,30 @@ class App extends Component {
       planetToAddUrl: [],
       toggle: false,
       loadingFilms: true,
+      filmTitleValidation: false,      
+      onBlurFilmTitle: false,
+     
     };
   }
   ///Get Planet from SWAPI
   getFilms() {
-    this.setState({loadingFilms: false})
+    this.setState({ loadingFilms: false });
     return axios
       .get(
         "https://mighty-chamber-74291.herokuapp.com/https://swapi.co/api/films"
       )
       .then(response => {
-        this.setState({ films: response.data.results, loadingFilms:true });
+        this.setState({ films: response.data.results, loadingFilms: true });
         ///We will use Lodash to minimalize number of GET method
-      ///Must add error message
+        ///Must add error message
+      })
+      .catch(err => {
+        console.log(`Error, not conection with SWAPI. Number of error: ${err}`);
       });
-     
   }
   ///Get Planet from SWAPI when component is load
-  componentDidMount() {    
-    this.getFilms();    
+  componentDidMount() {
+    this.getFilms();
   }
   onChangeValue = event => {
     this.setState({ valueName: event.target.value });
@@ -247,15 +277,20 @@ class App extends Component {
     this.setState({
       value: event.target.value,
       search: `https://mighty-chamber-74291.herokuapp.com/https://swapi.co/api/planets/?search=${this.state.value}`
-    });    
-    return axios.get(`${this.state.search}`).then(response => {
-      if (response.data.results === undefined) {        
-        ///We will use Lodash to minimalize number of GET method
-///Must add error message
-      } else {
-        this.setState({ searchResult: response.data.results });
-      }
     });
+    return axios
+      .get(`${this.state.search}`)
+      .then(response => {
+        if (response.data.results === undefined) {
+          ///We will use Lodash to minimalize number of GET method
+          ///Must add error message
+        } else {
+          this.setState({ searchResult: response.data.results });
+        }
+      })
+      .catch(err => {
+        console.log(`Error, not conection with SWAPI. Number of error: ${err}`);
+      });
   };
   //event who add film to films list
   onAddItem = () => {
@@ -275,7 +310,9 @@ class App extends Component {
         planets: "",
         planet: [],
         planetToAdd: [],
-        planetToAddUrl: []
+        planetToAddUrl: [],
+        filmTitleValidation:false,
+        onBlurFilmTitle:false,
       };
     });
   };
@@ -297,38 +334,77 @@ class App extends Component {
     this.setState({ toggle: !this.state.toggle });
   };
 
+  onBlurTitle = () => {
+    this.setState({ onBlurFilmTitle: true });
+
+    if (
+      this.state.valueName.length > 2 &&
+      /^[A-Z]/.test(this.state.valueName)
+    ) {
+      
+      this.setState({ filmTitleValidation: true });
+    } else this.setState({ filmTitleValidation: false });
+    
+  };
+
+
+
   render() {
     const { films } = this.state;
-    
+  
+
+    // this.state.valueName.length > 0 && this.state.planetToAdd.length > 0,
     return (
-      <div className="App">        
+      <div className="App">
         <AppWrapper>
           <LogoWrapper>
-            <a href=""><LogoImg src={StarLogo} /></a>
+            <a href="">
+              <LogoImg src={StarLogo} />
+            </a>
           </LogoWrapper>
-          {!this.state.loadingFilms && <LoaderArrowsWrapper src={LoaderArrows}/> }
-          <List films={films} />          
+
+          {!this.state.loadingFilms && (
+            <LoaderArrowsWrapper src={LoaderArrows} />
+          )}
+          <List films={films} />
           <AddFilmWrapper>
-          <AddFilmColapse onClick={this.onToggle}>
-          <div>
-            <h1>Add Planet</h1>
-          </div>
-          <div>
-            <img src={this.state.toggle ? ArrowClose : ArrowOpen} />
-          </div>
-        </AddFilmColapse>
-        {this.state.toggle && (<InputsWrapper>
-              {/* Film to ADD*/}
-              <OneInputWrapper>
-              <ButtonLabel>Movie Title</ButtonLabel>              
-                <StyledInput
-                  type="text"
-                  value={this.state.valueName}
-                  onChange={this.onChangeValue}
-                  placeholder="Please enter the tittle of the movie"
-                />
-              </OneInputWrapper>
-                 <PlanetToAddWrapper>
+            <AddFilmColapse onClick={this.onToggle}>
+              <div>
+                <h1>Add movie</h1>
+              </div>
+              <OpenClosseArrowWrapper>
+                <img src={this.state.toggle ? ArrowClose : ArrowOpen} />
+              </OpenClosseArrowWrapper>
+            </AddFilmColapse>
+            {this.state.toggle && (
+              <InputsWrapper>
+                {/* Film to ADD*/}
+                <OneInputWrapper>
+                  <ButtonLabel   ///??????????????????????????????
+                    className={
+                      !this.state.filmTitleValidation &&
+                      this.state.onBlurFilmTitle
+                        ? `errorTitle`
+                        : ``
+                    }
+                  >
+                    Movie Title
+                  </ButtonLabel>
+                  <StyledInput
+                    type="text"
+                    value={this.state.valueName}
+                    onChange={this.onChangeValue}
+                    onBlur={this.onBlurTitle}
+                    placeholder="Please enter the tittle of the movie"
+                  />
+                  {!this.state.filmTitleValidation &&
+                  this.state.onBlurFilmTitle ? (
+                    <ErrorValidationComunicat><p>Movie tittle name must start with a capital letter.</p></ErrorValidationComunicat>
+                  ) : (
+                    ``
+                  )}
+                </OneInputWrapper>
+                <PlanetToAddWrapper>
                   {this.state.planetToAdd.map((name, num) => {
                     return (
                       <div key={num}>
@@ -339,36 +415,42 @@ class App extends Component {
                       </div>
                     );
                   })}
-               </PlanetToAddWrapper>   
-              <OneInputWrapper>
-                <img src={SearchIcon}/>
-                <ButtonLabel>Add Planet</ButtonLabel>
+                </PlanetToAddWrapper>
+                <OneInputWrapper>
+                  <img src={SearchIcon} />
+                  <ButtonLabel>Add Planet</ButtonLabel>
                   <StyledInput
                     type="text"
                     value={this.state.value}
                     onChange={this.onHandleSearch}
                     placeholder="Seacrh for the the planet in database"
                   />
-              </OneInputWrapper>
-              <ListOfSearchResult>               
-                {this.state.searchResult.map((name, num) => {
-                  return (
-                    <p onClick={this.onAddPlanet} key={num}>
-                      {name.name}
-                    </p>
-                  );
-                })}
-              </ListOfSearchResult>
-              <AddFilmButton>
-                <button
-                  type="button"
-                  onClick={this.onAddItem}
-                  disabled={!this.state.valueName}
-                >
-                  <p>ADD MOVIE</p>
-                </button>
-              </AddFilmButton>
-            </InputsWrapper>)}
+                </OneInputWrapper>
+                <ListOfSearchResult>
+                  {this.state.searchResult.map((name, num) => {
+                    return (
+                      <p onClick={this.onAddPlanet} key={num}>
+                        {name.name}
+                      </p>
+                    );
+                  })}
+                </ListOfSearchResult>
+                <AddFilmButton>
+                  <button
+                    className={
+                      !this.state.filmTitleValidation 
+                        ? `errorButton`
+                        : ``
+                    }
+                    type="button"
+                    onClick={this.onAddItem}
+                    disabled={!this.state.filmTitleValidation}
+                  >
+                    <p>ADD MOVIE</p>
+                  </button>
+                </AddFilmButton>
+              </InputsWrapper>
+            )}
           </AddFilmWrapper>
           <COPYRIGHTWrapper>
             <p>COPYRIGHT © 2019 MIRUMEE SOFTWARE</p>

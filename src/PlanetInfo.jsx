@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import ObjectInList from "./ObjectInTable";
-import styled from "styled-components";
+import styled,{keyframes} from "styled-components";
 import ArrowClose from "./assets/ARROWCLOSE.svg";
 import ArrowOpen from "./assets/ARROWOPEN.svg";
 import SortArrows from './assets/SortArrows.svg'
+import LoaderArrows from './assets/LoaderArrowsS.png';
+
 const swapi = require("swapi-node");
+
 
   /////Styles ////
 const FilmTitle = styled.div`
@@ -13,7 +15,7 @@ const FilmTitle = styled.div`
       flex-wrap: nowrap;
       width: 100%;
       height:48px;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
       border-radius: 4px;
       box-shadow: 0px 2px 1px rgba(196, 196, 196, 0.2);
@@ -41,10 +43,70 @@ const FilmTitle = styled.div`
   const HeadTable = styled.tr`
 
   `;
+const AboutPlanetTable = styled.table`
+    width:100%;       
+p{
+   font-family: 'Barlow', sans-serif;
+   font-style: normal;
+   font-weight: normal;
+   font-size: 12px;
+   line-height: 14px;
+   position:relative;
+   img{
+     margin-left:6px;
+     position:absolute;
+     bottom:1;
+   }
+ }
+   thead{
+     border-bottom:1px solid black;
+   }                
+   tr{                   
+      td:first-child{
+      color: #00687F;       
+      }
+         th:first-child{
+         color: #00687F;       
+     }}
+   td{
+     text-align:center;        
+   } 
+`;
+
+const spin = keyframes`
+from {transform: rotate(0deg);}
+to    {transform: rotate(360deg);}
+`;
+
+const LoaderArrowsWrapper = styled.img`
+  transform: rotate(360deg);
+   transform-origin: top left;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform-origin: center;
+  -webkit-animation:${spin} 2s ease-in-out infinite;
+  -moz-animation:${spin} 2s ease-in-out infinite;
+  animation:${spin} 2s ease-in-out infinite;  
+`;
+
+const NoOnePlanetWrapper = styled.p`
+ margin-left:30px;
+ font-family: 'Barlow', sans-serif;
+   font-style: normal;
+   font-weight: normal;
+   font-size: 12px;
+   line-height: 14px;
+   position:relative;
+
+`;
+
+
 /////Styles End///
 
 
 class PlanetInfo extends Component {
+
   constructor(props) {
     super(props);
 
@@ -53,22 +115,42 @@ class PlanetInfo extends Component {
       toggle: true,
       planetsInfo:[],
       loadingPlanets:false,
+      noOnePlanet:false,
     };
   }
+  componentDidMount() {
+     
+    this.setState({ planetsInfo:[]}); 
+    if (this.props.filmInfo.planets.length==0){
+      this.setState({loadingPlanets: true, noOnePlanet: true})
+    }
+    
+  }
+
+
 FilterArrow = () =>{ 
          return <><img src={SortArrows}/></>    
  } 
  
- getPlanets= () => {    
+ getPlanets= () => {   
+ 
+  this.setState({ planetsInfo:[]}); 
   this.props.filmInfo.planets.map((p, num) => {
     this.setState({ loadingPlanets: false}, () => { 
-    console.log(this.state.loadingPlanets)
+    
+    
+///I download the planet data separately, because it was specified in the task.
+    /// For efficiency, it would be better to download all the planets on one query and then filter them.
+    /// "The planets for a specific movie should be fetched when we expand the movie details, not on initial app load."
+
   swapi.get(` https://mighty-chamber-74291.herokuapp.com/${p}`).then(result => {
     this.state.planetsInfo.push(result);
-    setTimeout(()=>this.setState({ loadingPlanets: true}), 1200);    
-    console.log(this.state.loadingPlanets)    
-    ///Must add error message
-  });
+        setTimeout(()=>this.setState({ loadingPlanets: true}), 1200);   
+    
+  
+  }).catch((err) => {
+    console.log(`Error, not conection with SWAPI. Number of error: ${err}`);
+});
   })
 })
 }
@@ -80,55 +162,28 @@ FilterArrow = () =>{
  }
   onToggle = () => {
     this.setState({ toggle: !this.state.toggle });
-    this.getPlanets();
-    console.log(this.state.loadingPlanets)
+    {this.state.toggle && this.setState({ planetsInfo:[]}); this.getPlanets(); }
+    this.setState({ planetsInfo:[]});    
   };
  
 
 
 
-  componentDidMount() {
-    
-  }
-
+  
+ 
   render() {    
-    console.log(this.state.loadingPlanets)
-    const AboutPlanetTable = styled.table`
-    width:100%;
-    height: ${`${55*this.props.filmInfo.planets.length}px`};      
-   p{
-      font-family: 'Barlow', sans-serif;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 14px;
-      position:relative;
-      img{
-        margin-left:6px;
-        position:absolute;
-        bottom:1;
-      }
-    }
-      thead{
-        border-bottom:1px solid black;
-      }                
-      tr{                   
-         td:first-child{
-         color: #00687F;       
-         }
-            th:first-child{
-            color: #00687F;       
-        }}
-      td{
-        text-align:center;        
-      }
-      
-    
-  `;
+  
 
+   const TableWrapper = styled.div`
+   height: ${`${37+(47*this.props.filmInfo.planets.length)}px`}; 
+   width:100%;
+   position:relative;
+   `;  
+
+ 
     return (
-      
-      <TitleWrapper>
+     
+      <TitleWrapper>       
         <FilmTitle onClick={this.onToggle}>        
           <div>
             <h1>{this.props.filmInfo.title}</h1>
@@ -137,9 +192,13 @@ FilterArrow = () =>{
             <img src={this.state.toggle ? ArrowClose : ArrowOpen} />
           </div>
         </FilmTitle>
-        {!this.state.toggle && <AboutPlanetTable>         
-          {this.state.loadingPlanets && <>
-            <thead>
+         
+        {!this.state.toggle && <TableWrapper>       
+          
+          {!this.state.loadingPlanets &&  <LoaderArrowsWrapper src={LoaderArrows}/>}
+          {this.state.noOnePlanet ? <NoOnePlanetWrapper>This is an episode in Millennium Falcon</NoOnePlanetWrapper> :<>
+            <AboutPlanetTable>  
+             <thead>
               <HeadTable>
                 <th><p onClick={this.onSortFunction}>Planet Name{this.FilterArrow()}</p></th>
                 <th><p>Rotation period{this.FilterArrow()}</p></th>
@@ -149,7 +208,7 @@ FilterArrow = () =>{
                 <th><p>Surface water{this.FilterArrow()}</p></th>
                 <th><p>Population{this.FilterArrow()}</p></th>
               </HeadTable>
-            </thead>
+            </thead>             
             <tbody>
           {this.state.planetsInfo.map((p, num) => {
             return(
@@ -165,8 +224,9 @@ FilterArrow = () =>{
             )
           })} 
             </tbody>
-            </>}
             </AboutPlanetTable>
+            </>}
+            </TableWrapper>
         }
         
       </TitleWrapper>
