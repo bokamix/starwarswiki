@@ -115,7 +115,7 @@ const OneInputWrapper = styled.div`
   }
   img {
     position: absolute;
-    bottom: 7px;
+    bottom: 3px;
     right: 0;
   }
 `;

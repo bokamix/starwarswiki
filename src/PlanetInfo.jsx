@@ -192,82 +192,39 @@ class PlanetInfo extends Component {
     }
     //////From string to number ////////
     ///Propably i can do this easier, but i do not have to more time ////
+    
     let i;
+    const keyTable = [`population`,  `orbital_period`, `rotation_period`, `surface_water`, `diameter`]
+    
+      
+      if (keyTable.includes(e.target.id)){
+
+        const keySort = e.target.id;        
     for (i = 0; i < this.state.planetsInfo.length; i++) {
-      if (this.state.planetsInfo[i].population === "unknown") {
-        this.state.planetsInfo[i].population = -123124124124124124124124;
+        if (this.state.planetsInfo[i][keySort] === "unknown") {
+          this.state.planetsInfo[i][keySort] = 123124124124124124124124;
       } else {
-        this.state.planetsInfo[i].population = parseInt(
-          this.state.planetsInfo[i].population,
+          this.state.planetsInfo[i][keySort] = parseInt(
+          this.state.planetsInfo[i][keySort],
           10
         );
-      }
-      if (this.state.planetsInfo[i].orbital_period === "unknown") {
-        this.state.planetsInfo[i].orbital_period = -123124124124124124124124;
-      } else {
-        this.state.planetsInfo[i].orbital_period = parseInt(
-          this.state.planetsInfo[i].orbital_period,
-          10
-        );
-      }
-      if (this.state.planetsInfo[i].rotation_period === "unknown") {
-        this.state.planetsInfo[i].rotation_period = -123124124124124124124124;
-      } else {
-        this.state.planetsInfo[i].rotation_period = parseInt(
-          this.state.planetsInfo[i].rotation_period,
-          10
-        );
-      }
-      if (this.state.planetsInfo[i].surface_water === "unknown") {
-        this.state.planetsInfo[i].surface_water = -123124124124124124124124;
-      } else {
-        this.state.planetsInfo[i].surface_water = parseInt(
-          this.state.planetsInfo[i].surface_water,
-          10
-        );
-      }
-      if (this.state.planetsInfo[i].diameter === "unknown") {
-        this.state.planetsInfo[i].diameter = -123124124124124124124124;
-      } else {
-        this.state.planetsInfo[i].diameter = parseInt(
-          this.state.planetsInfo[i].diameter,
-          10
-        );
-      }
-    }
+      }      
+    }}
     //////END From string to number END ////////
     let accessKeyPosition = `${!this.state.sortToggle ? `-` : ``}${
-      e.target.accessKey
+      e.target.id
     }`;
     this.state.planetsInfo.sort(dynamicSortMultiple(accessKeyPosition));
     this.setState({ loadingPlanets: false });
     this.setState({ loadingPlanets: true });
-    //////Back unkown element to string////////
-    
+    //////Back unkown element to string////////    
+    if (keyTable.includes(e.target.id)){
+      const keySort = e.target.id; 
     for (i = 0; i < this.state.planetsInfo.length; i++) {
-      if (this.state.planetsInfo[i].population === -123124124124124124124124) {
-        this.state.planetsInfo[i].population = "unknown";
-      }
-      if (
-        this.state.planetsInfo[i].orbital_period === -123124124124124124124124
-      ) {
-        this.state.planetsInfo[i].orbital_period = "unknown";
-      }
-      if (
-        this.state.planetsInfo[i].rotation_period === -123124124124124124124124
-      ) {
-        this.state.planetsInfo[i].rotation_period = "unknown";
-      }
-      if (
-        this.state.planetsInfo[i].surface_water === -123124124124124124124124
-      ) {
-        this.state.planetsInfo[i].surface_water = "unknown";
-      }
-
-      if (this.state.planetsInfo[i].diameter === -123124124124124124124124) {
-        this.state.planetsInfo[i].diameter = "unknown";
-      }
-    }
+      if (this.state.planetsInfo[i][keySort] === 123124124124124124124124) {
+        this.state.planetsInfo[i][keySort] = "unknown";
+      }      
+    }}
     ////// END  Back unkown element to string END////////
   };
 
@@ -312,47 +269,47 @@ class PlanetInfo extends Component {
                 <AboutPlanetTable className="desktop-table">
                   <thead>
                     <HeadTable>
-                      <th>
-                        <p accessKey="name" onClick={this.onSortFunction}>
+                      <th >
+                        <p id="name" onClick={this.onSortFunction} >
                           Planet Name{this.FilterArrow()}
                         </p>
                       </th>
-                      <th>
+                      <th >
                         <p
-                          accessKey="rotation_period"
-                          onClick={this.onSortFunction}
+                          id="rotation_period" onClick={this.onSortFunction}
+                          
                         >
                           Rotation period{this.FilterArrow()}
                         </p>
                       </th>
-                      <th>
+                      <th >
                         <p
-                          accessKey="orbital_period"
-                          onClick={this.onSortFunction}
+                         id="orbital_period" onClick={this.onSortFunction}
+                          
                         >
                           Orbital period{this.FilterArrow()}
                         </p>
                       </th>
-                      <th>
-                        <p accessKey="diameter" onClick={this.onSortFunction}>
+                      <th >
+                        <p id="diameter" onClick={this.onSortFunction} >
                           Diameter{this.FilterArrow()}
                         </p>
                       </th>
-                      <th>
-                        <p accessKey="climate" onClick={this.onSortFunction}>
+                      <th >
+                        <p id="climate" onClick={this.onSortFunction} >
                           Climate{this.FilterArrow()}
                         </p>
                       </th>
-                      <th>
+                      <th >
                         <p
-                          accessKey="surface_water"
-                          onClick={this.onSortFunction}
+                         id="surface_water" onClick={this.onSortFunction}
+                          
                         >
                           Surface water{this.FilterArrow()}
                         </p>
                       </th>
-                      <th>
-                        <p accessKey="population" onClick={this.onSortFunction}>
+                      <th >
+                        <p id="population" onClick={this.onSortFunction} >
                           Population{this.FilterArrow()}
                         </p>
                       </th>
