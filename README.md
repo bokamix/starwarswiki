@@ -8,13 +8,6 @@ For efficiency, it would be better to download all the planets on one query and 
 In app.js I download a list of movies, I put there the function of adding movies.
 To styling project i used styled-component and normal css file. 
 
-Props-types
-Its done
-
-LocalStorage
-
-Its done to
-
 GraphQL
 To connect with data i used swapmi npm api. 
 I tried to download data via GraphQL. Unfortunately, the GraphQL api is probably misconfigured and forwards access denied.
@@ -42,9 +35,5 @@ You will also see any lint errors in the console.
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 
